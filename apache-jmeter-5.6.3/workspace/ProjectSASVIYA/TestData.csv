@@ -1,0 +1,21 @@
+transaction_id;user;password;channel_code;state_type;rule_code;memo_comment;year;month;day;hour;reason_code;reason_desc;blacklists;files;is_permanently;field_name;oper;value;ref_id;attach_file;address_string1;address_string2;address_string3;home_tel_no;home_tel_no_end;office_address_string1;office_address_string2;office_address_string3;chassis_no;license_no;license_province_code;chassis_no_cleansing;license_no_cleansing
+20290927150000;rawee.s;123345;01;null;A001;test memo;2024;10;16;10;R101,R102;ID NUMBER ON,COLLUSION;;;Y;NAME,STATUS;=,=;test name,2032143;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;VQU-4374-09M0R;;;;
+20290927150002;hirun.s;897464;01;001;A002;test memo;2024;11;2;10;R102,R103;ID NUMBER ON,Coll ;;;Y;NAME;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;VQU-4374-09M0R;;;;
+20290927150034;mutita.b;123432;02;002;A003;test memo;2024;09;3;10;R101;ID NUMBER ON ;;;Y;REQ_NO;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;VQU-4374-09M0R;;;;
+906383135;hirun2.s;321234;01;001;A004;test memo;2024;12;10;10;R102;ID NUMBER ON ;;;Y;REQ_NO;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;ZYJ-0852-4595K;;;;
+426393326;mello.s;324534;02;002;A005;test memo;2024;10;15;10;R101;ID NUMBER ON ;;;Y;REQ_NO;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;ZYJ-0852-4595K;;;;
+20290927150001;nun.s;222333;02;002;A010;test memo;2024;11;3;10;R102;ID NUMBER ON;;;Y;REQ_NO;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;
+20241024_131738;nararat.s;543432;01;001;A007;test memo;2024;09;2;10;R101;ID NUMBER ON;;;N;REQ_NO;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;
+716714577;miew.s;543456;02;002;A008;test memo;2025;12;3;10;R102;ID NUMBER ON;;;N;ID_CARD;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;
+906383135;gam.m;876543;02;002;A010;test memo;2025;11;15;10;R102;ID NUMBER ON;;;N;REQ_NO;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;
+426393326;wisuorn.w;456345;01;001;A012;test memo;2025;12;2;10;R102;ID NUMBER ON;;;N;REQ_NO;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;
+20290927150002;banana.b;234563;01;001;A014;test memo;2025;11;10;10;R102;ID NUMBER ON;;;N;REQ_NO;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;
+20290927150067;plam.p;890453;01;001;A016;test memo;2025;12;16;10;R102;ID NUMBER ON;;;N;NAME;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;
+716714577;ttza.s;123456;01;001;A001;test memo;2024;10;2;10;R101;COLLUSION;;;Y;ID_CARD;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;
+906383135;wink.w;444555;01;001;A001;test memo;2024;09;10;10;R101;COLLUSION;;;Y;ID_CARD;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;ZYJ-0852-4595K;;;;
+426393326;nanaka.k;456788;02;002;A001;test memo;2024;12;15;10;R102;COLLUSION;;;Y;NAME;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;ZYJ-0852-4595K;;;;
+20290927150003;lala.s;654345;01;001;A006;test memo;2024;11;16;10;R102;COLLUSION;;;Y;NAME;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;
+20290927150033;labu.b;765765;01;001;A009;test memo;2025;10;10;10;R101;COLLUSION;;;N;ID_CARD;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;
+716714577;rawee.s;345235;01;001;A011;test memo;2025;09;16;10;R101;COLLUSION;;;N;ID_CARD;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;
+906383135;manee.s;432543;02;002;A013;test memo;2025;10;3;10;R101;COLLUSION;;;N;REQ_NO;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;
+426393326;meena.s;123456;02;002;A015;test memo;2025;09;15;10;R101;COLLUSION;;;N;REQ_NO;=;test name;0123065712_cartoon_87d80128-c23e-4bd1-b70b-ca9611da99e0;;;;;;;;;;IPF-1081-AGHZZ;;;;

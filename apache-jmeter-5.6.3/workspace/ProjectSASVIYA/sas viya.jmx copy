@@ -1,0 +1,1184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="url" elementType="Argument">
+            <stringProp name="Argument.name">url</stringProp>
+            <stringProp name="Argument.value">9f76480f-37f0-46c5-970b-e2145817ceb9.mock.pstmn.io</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="contentType" elementType="Argument">
+            <stringProp name="Argument.name">contentType</stringProp>
+            <stringProp name="Argument.value">application/json</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="method" elementType="Argument">
+            <stringProp name="Argument.name">method</stringProp>
+            <stringProp name="Argument.value">POST</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="CallProcessManager" elementType="Argument">
+            <stringProp name="Argument.name">CallProcessManager</stringProp>
+            <stringProp name="Argument.value">TestDataCPM.csv</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="bodyFile" elementType="Argument">
+            <stringProp name="Argument.name">bodyFile</stringProp>
+            <stringProp name="Argument.value">data.txt</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="TestUserFile" elementType="Argument">
+            <stringProp name="Argument.name">TestUserFile</stringProp>
+            <stringProp name="Argument.value">TestData.csv</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="imgPathConfirmFraud" elementType="Argument">
+            <stringProp name="Argument.name">imgPathConfirmFraud</stringProp>
+            <stringProp name="Argument.value">imageConfirmFraud/</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="https" elementType="Argument">
+            <stringProp name="Argument.name">https</stringProp>
+            <stringProp name="Argument.value">https</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="imgPathAddmemo" elementType="Argument">
+            <stringProp name="Argument.name">imgPathAddmemo</stringProp>
+            <stringProp name="Argument.value">imageAddmemo/</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="imgPathUpdateGenuine" elementType="Argument">
+            <stringProp name="Argument.name">imgPathUpdateGenuine</stringProp>
+            <stringProp name="Argument.value">imageUpdateGenuine/</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="imgPathUpdateGenuineSC" elementType="Argument">
+            <stringProp name="Argument.name">imgPathUpdateGenuineSC</stringProp>
+            <stringProp name="Argument.value">imageUpdateGenuineSC/</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="imgPathUpdateStatusReassign" elementType="Argument">
+            <stringProp name="Argument.name">imgPathUpdateStatusReassign</stringProp>
+            <stringProp name="Argument.value">imageUpdateStatusReassign/</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">false</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">User-Agent</stringProp>
+              <stringProp name="Header.value">ApacheJMeter</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Authorization</stringProp>
+              <stringProp name="Header.value">Bearer ${token}</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller"/>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Get Data From CSV  TestData">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">// Import required classes
+import org.apache.commons.io.FileUtils
+import java.io.File
+
+// Load CSV
+String basePath = org.apache.jmeter.services.FileServer.getFileServer().getBaseDir();
+String csvFilePath = basePath + &quot;/&quot; + vars.get(&quot;TestUserFile&quot;);
+
+List lines = FileUtils.readLines(new File(csvFilePath), &quot;UTF-8&quot;);
+int threadNum = ctx.getThreadNum();
+
+// Read the header line
+String headerLine = lines.get(0);
+String[] variableNames = headerLine.split(&quot;;&quot;);  // Split header by delimiter and store as variable names
+
+// Calculate the line number to read for this thread
+int lineNumber = (threadNum + 1) % lines.size();
+String line = lines.get(lineNumber);
+String[] parts = line.split(&quot;;&quot;);
+
+for (int j = 0; j &lt; variableNames.length; j++) {
+    String variableName = variableNames[j];
+    
+    // Check if the current row has enough columns
+    String value = (j &lt; parts.length) ? parts[j] : null;
+
+    // Check if the value is neither null nor empty (after trimming)
+    if (value != null &amp;&amp; !value.trim().isEmpty()) {
+        vars.put(variableName, value.trim());  // Store each value in JMeter&apos;s variables
+    } else {
+        vars.put(variableName, &quot;&quot;);  // Assign empty string if value is null or empty
+    }
+
+    log.info(&quot;Assigned variable: &quot; + variableName + &quot; = &quot; + (value != null ? value : &quot;&quot;));
+}
+
+
+//import org.apache.commons.io.FileUtils
+//import java.io.File
+//
+//// Load CSV
+//String basePath = org.apache.jmeter.services.FileServer.getFileServer().getBaseDir();
+//String csvFilePath = basePath + &quot;/&quot; + vars.get(&quot;TestUserFile&quot;);
+//List lines = FileUtils.readLines(new File(csvFilePath), &quot;UTF-8&quot;)
+//int threadNum = ctx.getThreadNum()
+//
+//// Calculate the line number to read for this thread
+//int lineNumber = (threadNum + 1) % lines.size()
+//String line = lines.get(lineNumber)
+//String[] parts = line.split(&quot;;&quot;)
+//
+//log.info(&quot;Thread num: ${threadNum}, user: ${parts[0]}&quot;)
+//vars.put(&quot;username&quot;, parts[0])
+//vars.put(&quot;password&quot;, parts[1])
+//vars.put(&quot;channel_code&quot;, parts[2])
+//vars.put(&quot;state_type&quot;, parts[3])
+//vars.put(&quot;rule_code&quot;, parts[4])
+//vars.put(&quot;memo_comment&quot;, parts[5])
+//
+//
+</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Get Data From CSV  TestDataCPM">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">// Import required classes
+import org.apache.commons.io.FileUtils
+import java.io.File
+
+// Load CSV
+String basePath = org.apache.jmeter.services.FileServer.getFileServer().getBaseDir();
+String csvFilePath = basePath + &quot;/&quot; + vars.get(&quot;CallProcessManager&quot;);
+String dataPath = basePath + &quot;/&quot; + vars.get(&quot;bodyFile&quot;);
+List lines = FileUtils.readLines(new File(csvFilePath), &quot;UTF-8&quot;);
+int threadNum = ctx.getThreadNum();
+
+// Read the header line
+String headerLine = lines.get(0);
+String[] variableNames = headerLine.split(&quot;;&quot;);  // Split header by delimiter and store as variable names
+
+// Calculate the line number to read for this thread
+int lineNumber = (threadNum + 1) % lines.size();
+String line = lines.get(lineNumber);
+String[] parts = line.split(&quot;;&quot;);
+
+
+def fileContent = new File(dataPath).text
+
+// Initialize modifiedContent with the original file content
+def modifiedContent = fileContent;
+
+for (int j = 0; j &lt; variableNames.length; j++) {
+    String variableName = variableNames[j];
+    
+    // Check if the current row has enough columns
+    String value = (j &lt; parts.length) ? parts[j] : null;
+
+    // Check if the value is neither null nor empty (after trimming)
+    if (value != null &amp;&amp; !value.trim().isEmpty()) {
+        vars.put(variableName, value.trim());  // Store each value in JMeter&apos;s variables
+    } else {
+        vars.put(variableName, &quot;&quot;);  // Assign empty string if value is null or empty
+    }
+
+    // Replace placeholder `${variableName}` in content with value, escaping the `$` for literal usage
+    modifiedContent = modifiedContent.replace(&quot;\\$&quot; + &quot;{&quot; + variableName + &quot;}&quot;, value != null ? value.trim() : &quot;&quot;);
+    log.info(&quot;Assigned variable: &quot; + variableName + &quot; = &quot; + (value != null ? value.trim() : &quot;&quot;));
+}
+
+
+// Store modified content in JMeter variables if required
+vars.put(&quot;requestBody&quot;, modifiedContent);
+
+// Log the output
+log.info(&quot;Body:&quot; + vars.get(&quot;requestBody&quot;));
+
+</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Login Controller" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+        </TransactionController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/auth/login</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;username&quot;: &quot;${username}&quot;,&#xd;
+    &quot;password&quot;: &quot;${password}&quot;,&#xd;
+    &quot;channel_code&quot;: &quot;${channel_code}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">User-Agent</stringProp>
+                  <stringProp name="Header.value">ApacheJMeter</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">${contentType}</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">token</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.token</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Transaction Controller">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+        </TransactionController>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">User-Agent</stringProp>
+                <stringProp name="Header.value">ApacheJMeter</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer ${token}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">${contentType}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetAlert">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/GetAlert</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;state_type&quot;: &quot;${state_type}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetReviewAndAction">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/GetReviewAndAction</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;request_no&quot;: &quot;${request_no}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetReviewAndActionByRuleCode">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">Fraud/GetReviewAndActionByRuleCode</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;request_no&quot;: &quot;${request_no}&quot;,&#xd;
+    &quot;rule_code&quot;: &quot;${rule_code}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="CallProcessManager">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/Fraud/CallProcessManager</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${requestBody}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer">
+              <stringProp name="ConstantTimer.delay">5000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ConfirmFraud" enabled="false">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/ConfirmFraud</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+            <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+              <collectionProp name="HTTPFileArgs.files">
+                <elementProp name="${imgPath}${transaction_id}_1.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_1.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_2.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_2.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_3.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_3.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_4.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_4.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_5.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_5.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="transaction_id" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${transaction_id}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">transaction_id</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="request_no" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${request_no}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">request_no</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="memo_comment" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${memo_comment}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">memo_comment</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="year" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${year}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">year</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="month" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${month}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">month</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="day" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${day}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">day</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="hour" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${hour}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">hour</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="reasons" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">[{&quot;reason_code&quot; : &quot;${reason_code_1}&quot;  , &quot;reason_desc&quot; : &quot;${reason_desc_1}&quot; }  , { &quot;reason_code&quot; : &quot;${reason_code_2}&quot;  , &quot;reason_desc&quot; : &quot;${reason_desc_2}&quot;}]</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">reasons</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="blacklists" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">[{&quot;field_name&quot; : &quot;${field_name_1}&quot;  , &quot;value&quot; : &quot;${value_1}&quot; } , { &quot;field_name&quot; : &quot;${field_name_2}&quot;, &quot;value&quot; : &quot;${value_2}&quot;}]</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">blacklists</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="is_permanently" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${is_permanently}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">is_permanently</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UpdateStatusReassign">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/UpdateStatusReassign</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+            <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+              <collectionProp name="HTTPFileArgs.files">
+                <elementProp name="${imgPathUpdateStatusReassign}${transaction_id}_1.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateStatusReassign}${transaction_id}_1.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathUpdateStatusReassign}${transaction_id}_2.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateStatusReassign}${transaction_id}_2.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathUpdateStatusReassign}${transaction_id}_3.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateStatusReassign}${transaction_id}_3.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathUpdateStatusReassign}${transaction_id}_4.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateStatusReassign}${transaction_id}_4.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathUpdateStatusReassign}${transaction_id}_5.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateStatusReassign}${transaction_id}_5.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="transaction_id" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${transaction_id}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">transaction_id</stringProp>
+                </elementProp>
+                <elementProp name="request_no" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${requestno}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">request_no</stringProp>
+                </elementProp>
+                <elementProp name="memo_comment" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${memo_comment}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">memo_comment</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">5000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UpdateGenuine">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/UpdateGenuine</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+            <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+              <collectionProp name="HTTPFileArgs.files">
+                <elementProp name="${imgPathUpdateGenuine}${transaction_id}_1.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateGenuine}${transaction_id}_1.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathUpdateGenuine}${transaction_id}_2.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateGenuine}${transaction_id}_2.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathUpdateGenuine}${transaction_id}_3.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateGenuine}${transaction_id}_3.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathUpdateGenuine}${transaction_id}_4.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateGenuine}${transaction_id}_4.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathUpdateGenuine}${transaction_id}_5.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateGenuine}${transaction_id}_5.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="transaction_id" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${transaction_id}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">transaction_id</stringProp>
+                </elementProp>
+                <elementProp name="request_no" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${request_no}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">request_no</stringProp>
+                </elementProp>
+                <elementProp name="memo_comment" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${memo_comment}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">memo_comment</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">5000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UpdateGenuineSC">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/UpdateGenuineSC</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+            <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+              <collectionProp name="HTTPFileArgs.files">
+                <elementProp name="${imgPathUpdateGenuineSC}${transaction_id}_1.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateGenuineSC}${transaction_id}_1.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathUpdateGenuineSC}${transaction_id}_2.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateGenuineSC}${transaction_id}_2.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathUpdateGenuineSC}${transaction_id}_3.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateGenuineSC}${transaction_id}_3.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathUpdateGenuineSC}${transaction_id}_4.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateGenuineSC}${transaction_id}_4.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathUpdateGenuineSC}${transaction_id}_5.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPathUpdateGenuineSC}${transaction_id}_5.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="transaction_id" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${transaction_id}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">transaction_id</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="request_no" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${request_no}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">request_no</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="memo_comment" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${memo_comment}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">memo_comment</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">5000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="AddMemo">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/AddMemo</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+            <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+              <collectionProp name="HTTPFileArgs.files">
+                <elementProp name="${imgPathAddmemo}${transaction_id}_1.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPathAddmemo}${transaction_id}_1.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathAddmemo}${transaction_id}_2.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPathAddmemo}${transaction_id}_2.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathAddmemo}${transaction_id}_3.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPathAddmemo}${transaction_id}_3.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathAddmemo}${transaction_id}_4.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPathAddmemo}${transaction_id}_4.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPathAddmemo}${transaction_id}_5.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPathAddmemo}${transaction_id}_5.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="transaction_id" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${transaction_id}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">transaction_id</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="request_no" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${request_no}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">request_no</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="memo_comment" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${memo_comment}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">memo_comment</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">5000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetMemo">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/GetMemo</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+  &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+  &quot;request_no&quot;: &quot;${request_no}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">5000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="SearchTransHistory" enabled="false">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/SearchTransHistory</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;conditions&quot;: [&#xd;
+        {&#xd;
+            &quot;field_name&quot;: &quot;${field_name_1}&quot;,&#xd;
+            &quot;oper&quot;: &quot;${oper}&quot;,&#xd;
+            &quot;value&quot;: &quot;${value_1}&quot;&#xd;
+        },&#xd;
+        {&#xd;
+            &quot;field_name&quot;: &quot;${field_name_2}&quot;,&#xd;
+            &quot;oper&quot;: &quot;${oper}&quot;,&#xd;
+            &quot;value&quot;: &quot;${value_2}&quot;&#xd;
+        }&#xd;
+    ]&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetAllFieldName">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/GetAllFieldName</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="CheckState" enabled="true">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/CheckState</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;request_no&quot;: &quot;${request_no}&quot;,&#xd;
+    &quot;username&quot;: &quot;${username}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>true</samplerData>
+            <xml>true</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">/Users/penploys/Desktop/Project SAS VIYA/SAS VIYA.csv</stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">/Users/qahivestaff02/Desktop/Files/sasviya/callprocessmanager.csv</stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
