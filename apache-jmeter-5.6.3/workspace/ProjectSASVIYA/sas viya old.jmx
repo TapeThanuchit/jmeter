@@ -1,0 +1,1106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+    </TestPlan>
+    <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="url" elementType="Argument">
+            <stringProp name="Argument.name">url</stringProp>
+            <stringProp name="Argument.value">9f76480f-37f0-46c5-970b-e2145817ceb9.mock.pstmn.io</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="contentType" elementType="Argument">
+            <stringProp name="Argument.name">contentType</stringProp>
+            <stringProp name="Argument.value">application/json</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="method" elementType="Argument">
+            <stringProp name="Argument.name">method</stringProp>
+            <stringProp name="Argument.value">POST</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="TestUserFile" elementType="Argument">
+            <stringProp name="Argument.name">TestUserFile</stringProp>
+            <stringProp name="Argument.value">TestData.csv</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="CallProcessManager" elementType="Argument">
+            <stringProp name="Argument.name">CallProcessManager</stringProp>
+            <stringProp name="Argument.value">TestDataCPM.csv</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="imgPath" elementType="Argument">
+            <stringProp name="Argument.name">imgPath</stringProp>
+            <stringProp name="Argument.value">image/</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="https" elementType="Argument">
+            <stringProp name="Argument.name">https</stringProp>
+            <stringProp name="Argument.value">https</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">false</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller"/>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Get Data From CSV  TestData">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import org.apache.commons.io.FileUtils
+import java.io.File
+
+// Load CSV
+String basePath = org.apache.jmeter.services.FileServer.getFileServer().getBaseDir();
+String csvFilePath = basePath + &quot;/&quot; + vars.get(&quot;TestUserFile&quot;);
+List lines = FileUtils.readLines(new File(csvFilePath), &quot;UTF-8&quot;)
+int threadNum = ctx.getThreadNum()
+
+// Calculate the line number to read for this thread
+int lineNumber = (threadNum + 1) % lines.size()
+String line = lines.get(lineNumber)
+String[] parts = line.split(&quot;;&quot;)
+//
+
+    
+// Store the data in JMeter variables
+log.info(&quot;Thread num: ${threadNum}, user: ${parts[0]}&quot;)
+vars.put(&quot;username&quot;, parts[0])
+vars.put(&quot;password&quot;, parts[1])
+vars.put(&quot;channel_code&quot;, parts[2])
+vars.put(&quot;state_type&quot;, parts[3])
+vars.put(&quot;rule_code&quot;, parts[4])
+vars.put(&quot;memo_comment&quot;, parts[5])
+vars.put(&quot;year&quot;, parts[6])
+vars.put(&quot;month&quot;, parts[7])
+vars.put(&quot;day&quot;, parts[8])
+vars.put(&quot;hour&quot;, parts[9])
+vars.put(&quot;reason_code_1&quot;, parts[10])
+vars.put(&quot;reason_code_2&quot;, parts[11])
+vars.put(&quot;reason_desc_1&quot;, parts[12])
+vars.put(&quot;reason_desc_2&quot;, parts[13])
+vars.put(&quot;blacklists&quot;, parts[14])
+vars.put(&quot;files&quot;, parts[15])
+vars.put(&quot;is_permanently&quot;, parts[16])
+vars.put(&quot;field_name_1&quot;, parts[17])
+vars.put(&quot;field_name_2&quot;, parts[18])
+vars.put(&quot;oper&quot;, parts[19])
+vars.put(&quot;value_1&quot;, parts[20])
+vars.put(&quot;value_2&quot;, parts[21])</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Get Data From CSV  TestDataCPM">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">// Import required classes
+import org.apache.commons.io.FileUtils
+import java.io.File
+
+// Load CSV
+String basePath = org.apache.jmeter.services.FileServer.getFileServer().getBaseDir();
+String csvFilePath = basePath + &quot;/&quot; + vars.get(&quot;CallProcessManager&quot;);
+
+List lines = FileUtils.readLines(new File(csvFilePath), &quot;UTF-8&quot;);
+int threadNum = ctx.getThreadNum();
+
+// Read the header line
+String headerLine = lines.get(0);
+String[] variableNames = headerLine.split(&quot;;&quot;);  // Split header by delimiter and store as variable names
+
+// Calculate the line number to read for this thread
+int lineNumber = (threadNum + 1) % lines.size();
+String line = lines.get(lineNumber);
+String[] parts = line.split(&quot;;&quot;);
+
+for (int j = 0; j &lt; variableNames.length; j++) {
+    String variableName = variableNames[j];
+    
+    // Check if the current row has enough columns
+    String value = (j &lt; parts.length) ? parts[j] : null;
+
+    // Check if the value is neither null nor empty (after trimming)
+    if (value != null &amp;&amp; !value.trim().isEmpty()) {
+        vars.put(variableName, value.trim());  // Store each value in JMeter&apos;s variables
+    } else {
+        vars.put(variableName, &quot;&quot;);  // Assign empty string if value is null or empty
+    }
+
+    log.info(&quot;Assigned variable: &quot; + variableName + &quot; = &quot; + (value != null ? value : &quot;&quot;));
+}
+</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Login Controller">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+        </TransactionController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/auth/login</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;username&quot;: &quot;${username}&quot;,&#xd;
+    &quot;password&quot;: &quot;${password}&quot;,&#xd;
+    &quot;channel_code&quot;: &quot;${channel_code}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">User-Agent</stringProp>
+                  <stringProp name="Header.value">ApacheJMeter</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">${contentType}</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">token</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.token</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Transaction Controller" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+        </TransactionController>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">User-Agent</stringProp>
+                <stringProp name="Header.value">ApacheJMeter</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer ${token}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">${contentType}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetAlert">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/GetAlert</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;state_type&quot;: &quot;${state_type}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetReviewAndAction" enabled="true">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/GetReviewAndAction</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;request_no&quot;: &quot;${request_no}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetReviewAndActionByRuleCode">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">Fraud/GetReviewAndActionByRuleCode</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;request_no&quot;: &quot;${request_no}&quot;,&#xd;
+    &quot;rule_code&quot;: &quot;${rule_code}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="CallProcessManager" enabled="true">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/Fraud/CallProcessManager</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;data&quot;: &quot;{    \&quot;inputs\&quot;: [      { \&quot;name\&quot;: \&quot;Application_Header_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;CHANNEL \&quot;: \&quot;String\&quot;     },    {        \&quot;CALLTYPE \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${channel}\&quot;,   \&quot;${calltype}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Address_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;ADDRESSTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;ADDRESSTYPEDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;COMPANYNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;ADDRESSNO \&quot;: \&quot;String\&quot;     },    {        \&quot;MOO \&quot;: \&quot;String\&quot;     },    {        \&quot;VILLAGE \&quot;: \&quot;String\&quot;     },    {        \&quot;FLOOR \&quot;: \&quot;String\&quot;     },    {        \&quot;ROOMNO \&quot;: \&quot;String\&quot;     },    {        \&quot;TROK \&quot;: \&quot;String\&quot;     },    {        \&quot;SOI \&quot;: \&quot;String\&quot;     },    {        \&quot;ROAD \&quot;: \&quot;String\&quot;     },    {        \&quot;SUBDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SUBDISTRICTNAMETHA \&quot;: \&quot;String\&quot;     },    {        \&quot;DISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;DISTRICTNAMETHA \&quot;: \&quot;String\&quot;     },    {        \&quot;PROVINCECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;PROVINCENAMETHA \&quot;: \&quot;String\&quot;     },    {        \&quot;ZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLADDRESS \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${addresstypecode}\&quot;,   \&quot;${addresstypedesc}\&quot;,   \&quot;${companyname}\&quot;,   \&quot;${addressno}\&quot;,   \&quot;${moo}\&quot;,   \&quot;${village}\&quot;,   \&quot;${floor}\&quot;,   \&quot;${roomno}\&quot;,   \&quot;${trok}\&quot;,   \&quot;${soi}\&quot;,   \&quot;${road}\&quot;,   \&quot;${subdistrictcode}\&quot;,   \&quot;${subdistrictnametha}\&quot;,   \&quot;${districtcode}\&quot;,   \&quot;${districtnametha}\&quot;,   \&quot;${provincecode}\&quot;,   \&quot;${provincenametha}\&quot;,   \&quot;${zipcode}\&quot;,   \&quot;${requestno}\&quot;,   \&quot;${fulladdress}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Applicant_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;IDCARD \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIX \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIXCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;NAME \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;MOBILE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOMETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;NATIONALITY \&quot;: \&quot;String\&quot;     },    {        \&quot;PERSONTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MARITALSTATUSCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;BIRTHDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEDAY \&quot;: \&quot;String\&quot;     },    {        \&quot;MILITARYSERVICECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;RESIDENTTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;COMPANYCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;COMPANYCATEGORYCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;RESPONSIBILITY \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPATIONGROUPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPATIONTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;BUSINESSTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CREATEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CREATEBY \&quot;: \&quot;String\&quot;     },    {        \&quot;UPDATEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;UPDATEBY \&quot;: \&quot;String\&quot;     },    {        \&quot;ACCOUNTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;BANKID \&quot;: \&quot;String\&quot;     },    {        \&quot;EXISTINGCUSTOMERFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;CARDTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;CARDEXPIRYDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;FIRSTNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;CHILDNUMBER \&quot;: \&quot;String\&quot;     },    {        \&quot;EDUCATIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SEXCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;RESIDENCETYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;RENTALCHARGEAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSINGTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;LIVINGPLACEPERIODYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;LIVINGPLACEPERIODMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITBANKACCOUNTTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITBANKACCOUNTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITBANKACCOUNTNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITBANKCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITBANKBRANCHCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;FAXNO \&quot;: \&quot;String\&quot;     },    {        \&quot;EMAILADDRESS \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPSUBGROUPCODE \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${idcard}\&quot;,   \&quot;${prefix}\&quot;,   \&quot;${prefixcode}\&quot;,   \&quot;${name}\&quot;,   \&quot;${surname}\&quot;,   \&quot;${fullname}\&quot;,   \&quot;${mobile}\&quot;,   \&quot;${hometel}\&quot;,   \&quot;${nationality}\&quot;,   \&quot;${persontypecode}\&quot;,   \&quot;${maritalstatuscode}\&quot;,   \&quot;${birthdate}\&quot;,   \&quot;${ageyear}\&quot;,   \&quot;${agemonth}\&quot;,   \&quot;${ageday}\&quot;,   \&quot;${militaryservicecode}\&quot;,   \&quot;${residenttypecode}\&quot;,   \&quot;${officetel}\&quot;,   \&quot;${companycode}\&quot;,   \&quot;${companycategorycode}\&quot;,   \&quot;${responsibility}\&quot;,   \&quot;${occupationgroupcode}\&quot;,   \&quot;${occupationtypecode}\&quot;,   \&quot;${businesstypecode}\&quot;,   \&quot;${createdate}\&quot;,   \&quot;${createby}\&quot;,   \&quot;${updatedate}\&quot;,   \&quot;${updateby}\&quot;,   \&quot;${accountno}\&quot;,   \&quot;${bankid}\&quot;,   \&quot;${existingcustomerflag}\&quot;,   \&quot;${cardtype}\&quot;,   \&quot;${cardexpirydate}\&quot;,   \&quot;${firstnameeng}\&quot;,   \&quot;${surnameeng}\&quot;,   \&quot;${fullnameeng}\&quot;,   \&quot;${childnumber}\&quot;,   \&quot;${educationcode}\&quot;,   \&quot;${sexcode}\&quot;,   \&quot;${residencetypecode}\&quot;,   \&quot;${rentalchargeamt}\&quot;,   \&quot;${housingtypecode}\&quot;,   \&quot;${livingplaceperiodyear}\&quot;,   \&quot;${livingplaceperiodmonth}\&quot;,   \&quot;${creditbankaccounttypecode}\&quot;,   \&quot;${creditbankaccountno}\&quot;,   \&quot;${creditbankaccountname}\&quot;,   \&quot;${creditbankcode}\&quot;,   \&quot;${creditbankbranchcode}\&quot;,   \&quot;${faxno}\&quot;,   \&quot;${emailaddress}\&quot;,   \&quot;${occupsubgroupcode}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Applicant_Reference_Person_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;SEQNO \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIX \&quot;: \&quot;String\&quot;     },    {        \&quot;NAME \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;FIRSTNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;RELATIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MOBILE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOMETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;HOMETELEND \&quot;: \&quot;String\&quot;     },    {        \&quot;HOMETELEXTSTART \&quot;: \&quot;String\&quot;     },    {        \&quot;HOMETELEXTEND \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETELEND \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETELEXTSTART \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETELEXTEND \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${seqno}\&quot;,   \&quot;${prefix}\&quot;,   \&quot;${name}\&quot;,   \&quot;${surname}\&quot;,   \&quot;${fullname}\&quot;,   \&quot;${firstnameeng}\&quot;,   \&quot;${surnameeng}\&quot;,   \&quot;${fullnameeng}\&quot;,   \&quot;${relationcode}\&quot;,   \&quot;${mobile}\&quot;,   \&quot;${hometel}\&quot;,   \&quot;${hometelend}\&quot;,   \&quot;${hometelextstart}\&quot;,   \&quot;${hometelextend}\&quot;,   \&quot;${officetel}\&quot;,   \&quot;${officetelend}\&quot;,   \&quot;${officetelextstart}\&quot;,   \&quot;${officetelextend}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Application_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITANALYSISBRANCHID \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITANALYSISBRANCHCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITANALYSISBRANCHNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;GUARANTOR \&quot;: \&quot;String\&quot;     },    {        \&quot;HPREFERENCENUMBER \&quot;: \&quot;String\&quot;     },    {        \&quot;PRODUCTTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;PRODUCTTYPENAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CARTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CARTYPENAME \&quot;: \&quot;String\&quot;     },    {        \&quot;REFCONTRACTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;OLDCARTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OLDCARTYPENAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CAMPAIGNCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CAMPAIGNDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;BRANDID \&quot;: \&quot;String\&quot;     },    {        \&quot;BRANDCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;BRANDNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;MODELID \&quot;: \&quot;String\&quot;     },    {        \&quot;MODELCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MODELNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILLINGADDRESS \&quot;: \&quot;String\&quot;     },    {        \&quot;DIGITFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;PLUSDOWNFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;CALMOTOFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;REFFINANCEAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;FINANCEAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;FINANCEVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;FINANCEEXVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;TERMID \&quot;: \&quot;String\&quot;     },    {        \&quot;TERM \&quot;: \&quot;String\&quot;     },    {        \&quot;INTEREST \&quot;: \&quot;String\&quot;     },    {        \&quot;REFFLATRATE \&quot;: \&quot;String\&quot;     },    {        \&quot;FLATRATE \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLFLATRATE \&quot;: \&quot;String\&quot;     },    {        \&quot;INSTALLMENTAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;INSTALLMENTVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;INSTALLMENTEXVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTEXVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;VATRATE \&quot;: \&quot;String\&quot;     },    {        \&quot;EFFRATEACT \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTAREAID \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTUSERID \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTFULLNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTFIRSTNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTCARD \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTPOSITION \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTPROHIBIT \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTBRANCHID \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTBRANCHCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTBRANCHNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTTEAMID \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTTEAMCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTTEAMNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTTEAMLEADERID \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTZONEID \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTZONECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTZONENAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;DEALERID \&quot;: \&quot;String\&quot;     },    {        \&quot;DEALERCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;DEALERNAMETHA \&quot;: \&quot;String\&quot;     },    {        \&quot;DEALERNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;DEALERSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;DEALERPROHIBIT \&quot;: \&quot;String\&quot;     },    {        \&quot;SHOWROOMID \&quot;: \&quot;String\&quot;     },    {        \&quot;SHOWROOMCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SHOWROOMNAMETHA \&quot;: \&quot;String\&quot;     },    {        \&quot;SHOWROOMNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;DEALEROFFSETFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;VERIFYNCBFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBCONSENTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPLICATIONSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;NCB01 \&quot;: \&quot;String\&quot;     },    {        \&quot;NCB02 \&quot;: \&quot;String\&quot;     },    {        \&quot;NCB03 \&quot;: \&quot;String\&quot;     },    {        \&quot;NCB04 \&quot;: \&quot;String\&quot;     },    {        \&quot;NCB05 \&quot;: \&quot;String\&quot;     },    {        \&quot;ADDDATETIME \&quot;: \&quot;String\&quot;     },    {        \&quot;VERIFYNCBDATETIME \&quot;: \&quot;String\&quot;     },    {        \&quot;PENDINGDATETIME \&quot;: \&quot;String\&quot;     },    {        \&quot;FINISHDATETIME \&quot;: \&quot;String\&quot;     },    {        \&quot;SUPPORTDAY \&quot;: \&quot;String\&quot;     },    {        \&quot;SUPPORTTIME \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITDAY \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITTIME \&quot;: \&quot;String\&quot;     },    {        \&quot;TOTALPENDINGDAY \&quot;: \&quot;String\&quot;     },    {        \&quot;TOTALPENDINGTIME \&quot;: \&quot;String\&quot;     },    {        \&quot;TOTALFINISHDAY \&quot;: \&quot;String\&quot;     },    {        \&quot;TOTALFINISHTIME \&quot;: \&quot;String\&quot;     },    {        \&quot;OVERRIDEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;OVERRIDEPERSONUSERID \&quot;: \&quot;String\&quot;     },    {        \&quot;OVERRIDEPERSONNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITANALYSTUSERID \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITANALYSTUSERNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITANALYSTNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;APPROVALUSERID \&quot;: \&quot;String\&quot;     },    {        \&quot;APPROVALNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;APPROVEDFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;APPROVEDDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPROVEDREASON \&quot;: \&quot;String\&quot;     },    {        \&quot;CANCELDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CANCELREASONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CANCELREASONNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CANCELREASONNOTE \&quot;: \&quot;String\&quot;     },    {        \&quot;ACTIVEFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;CREATEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CREATEBY \&quot;: \&quot;String\&quot;     },    {        \&quot;CREATEBYNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;UPDATEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;UPDATEBY \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITANALYSISPASSBRANCHID \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITANALYSISPASSBRANCHCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITANALYSISPASSBRANCHNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CASHOUT \&quot;: \&quot;String\&quot;     },    {        \&quot;SMSFIELDDATETIME \&quot;: \&quot;String\&quot;     },    {        \&quot;ASSIGNEDAPPROVALUSERID \&quot;: \&quot;String\&quot;     },    {        \&quot;ASSIGNEDAPPROVALNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;BIGBIKE \&quot;: \&quot;String\&quot;     },    {        \&quot;INTERESTPER \&quot;: \&quot;String\&quot;     },    {        \&quot;SUBPRODUCTTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;MODELGROUPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CONDITIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CARAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;DOWNAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;WHOLESALEPRICE \&quot;: \&quot;String\&quot;     },    {        \&quot;PRODUCTTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;STARTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;STARTSYSTEM \&quot;: \&quot;String\&quot;     },    {        \&quot;BREAKCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;BREAKSYSTEM \&quot;: \&quot;String\&quot;     },    {        \&quot;WHEELCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;WHEELSYSTEM \&quot;: \&quot;String\&quot;     },    {        \&quot;GEARCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;GEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;CC \&quot;: \&quot;String\&quot;     },    {        \&quot;FIRSTDUEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;COLORCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;COLORNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;PAYDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;AREACODE \&quot;: \&quot;String\&quot;     },    {        \&quot;AREANAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;IDCARD \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;BIRTHDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;RESIDENTTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MARITALSTATUSCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPATIONTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPATIONGROUPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPGRDNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;BUSINESSTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;OUTSTANDINGPERCENT \&quot;: \&quot;String\&quot;     },    {        \&quot;USERTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;PAYTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;LIVINGPLACEPERIODYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;LIVINGPLACEPERIODMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEOFWORKYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEOFWORKMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;INCOMETOTAL \&quot;: \&quot;String\&quot;     },    {        \&quot;SEX \&quot;: \&quot;String\&quot;     },    {        \&quot;SLIP \&quot;: \&quot;String\&quot;     },    {        \&quot;DESCRIPTION \&quot;: \&quot;String\&quot;     },    {        \&quot;CAMPAIGNDESCSTRING \&quot;: \&quot;String\&quot;     },    {        \&quot;OVERRIDEPOSITIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OVERRIDECRITERIA \&quot;: \&quot;String\&quot;     },    {        \&quot;SHOWROOMVERIFY \&quot;: \&quot;String\&quot;     },    {        \&quot;SHOWROOMZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;HIGHRISKCMOS \&quot;: \&quot;String\&quot;     },    {        \&quot;HIGHRISKDEALERS \&quot;: \&quot;String\&quot;     },    {        \&quot;CARDEXPIREDDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;DIFF \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPLYDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;SUBPRODUCTTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SALESCHANNELCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SALESREGIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SALESZONECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SALESBRANCHCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;LOANPURPOSECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;PAYMENTCHANNELCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTMINFINANCEAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTMAXFINANCEAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTTERM \&quot;: \&quot;String\&quot;     },    {        \&quot;SELECTEDTERM \&quot;: \&quot;String\&quot;     },    {        \&quot;APPBRANCHCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPZONECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPREGIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;INSTALLMENTNONINNCB \&quot;: \&quot;String\&quot;     },    {        \&quot;APPBRANCHNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;APPLICATIONSTATUSNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;SHORTFROMFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;CAPTURETYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;REACTIVATETYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;REFOLDREQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;ADJUSTADDITIONALMONTHLYDEBT \&quot;: \&quot;String\&quot;     },    {        \&quot;TOTALDBRAFTERADJUST \&quot;: \&quot;String\&quot;     },    {        \&quot;TOTALMONTHLYDEBTAFTERADJUST \&quot;: \&quot;String\&quot;     },    {        \&quot;HRSEGMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;RETENTIONSMS \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBSCORENAME \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBSCORE \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBSCOREGRADE \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBSCOREDESCRIPTION \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBODDS \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBREASON1 \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBREASON2 \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBREASON3 \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBREASON4 \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBREASON5 \&quot;: \&quot;String\&quot;     },    {        \&quot;UTILZATIONNUMREVOLVINGGT80 \&quot;: \&quot;String\&quot;     },    {        \&quot;UTILZATIONNUMCCGT80 \&quot;: \&quot;String\&quot;     },    {        \&quot;NEWACCOUNTNUMUNSECURE \&quot;: \&quot;String\&quot;     },    {        \&quot;UNSECUREDEXPOSURE \&quot;: \&quot;String\&quot;     },    {        \&quot;SCORINGCONSENT \&quot;: \&quot;String\&quot;     },    {        \&quot;CONSENTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;REFCONDITIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;BROKERASCUSTOMER \&quot;: \&quot;String\&quot;     },    {        \&quot;BROKERASGUARANTOR \&quot;: \&quot;String\&quot;     },    {        \&quot;TOPDEALER \&quot;: \&quot;String\&quot;     },    {        \&quot;SKIPPAYMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;REFSKIPPAYMENTTERM \&quot;: \&quot;String\&quot;     },    {        \&quot;RETENTIONFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;WORKPERMITEXPIREDDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;DIFFWORKPERMIT \&quot;: \&quot;String\&quot;     },    {        \&quot;RETAILPRICE \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPSUBGROUPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPSUBGRPNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;NUMBEROFRENTAL \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEANDWORKSAMEADDRESS \&quot;: \&quot;String\&quot;     },    {        \&quot;SUSPECTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SUSPECTDESC \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${contractno}\&quot;,   \&quot;${creditanalysisbranchid}\&quot;,   \&quot;${creditanalysisbranchcode}\&quot;,   \&quot;${creditanalysisbranchname}\&quot;,   \&quot;${guarantor}\&quot;,   \&quot;${hpreferencenumber}\&quot;,   \&quot;${producttypecode}\&quot;,   \&quot;${producttypename}\&quot;,   \&quot;${cartypecode}\&quot;,   \&quot;${cartypename}\&quot;,   \&quot;${refcontractno}\&quot;,   \&quot;${oldcartypecode}\&quot;,   \&quot;${oldcartypename}\&quot;,   \&quot;${campaigncode}\&quot;,   \&quot;${campaigndesc}\&quot;,   \&quot;${brandid}\&quot;,   \&quot;${brandcode}\&quot;,   \&quot;${brandname}\&quot;,   \&quot;${modelid}\&quot;,   \&quot;${modelcode}\&quot;,   \&quot;${modelnameeng}\&quot;,   \&quot;${maillingaddress}\&quot;,   \&quot;${digitflag}\&quot;,   \&quot;${plusdownflag}\&quot;,   \&quot;${calmotoflag}\&quot;,   \&quot;${reffinanceamt}\&quot;,   \&quot;${financeamt}\&quot;,   \&quot;${financevat}\&quot;,   \&quot;${financeexvat}\&quot;,   \&quot;${termid}\&quot;,   \&quot;${term}\&quot;,   \&quot;${interest}\&quot;,   \&quot;${refflatrate}\&quot;,   \&quot;${flatrate}\&quot;,   \&quot;${fullflatrate}\&quot;,   \&quot;${installmentamt}\&quot;,   \&quot;${installmentvat}\&quot;,   \&quot;${installmentexvat}\&quot;,   \&quot;${contractamt}\&quot;,   \&quot;${contractvat}\&quot;,   \&quot;${contractexvat}\&quot;,   \&quot;${vatrate}\&quot;,   \&quot;${effrateact}\&quot;,   \&quot;${mktareaid}\&quot;,   \&quot;${mktuserid}\&quot;,   \&quot;${mktcode}\&quot;,   \&quot;${mktfullname}\&quot;,   \&quot;${mktfirstname}\&quot;,   \&quot;${mktstatus}\&quot;,   \&quot;${mktcard}\&quot;,   \&quot;${mktposition}\&quot;,   \&quot;${mktprohibit}\&quot;,   \&quot;${mktbranchid}\&quot;,   \&quot;${mktbranchcode}\&quot;,   \&quot;${mktbranchname}\&quot;,   \&quot;${mktteamid}\&quot;,   \&quot;${mktteamcode}\&quot;,   \&quot;${mktteamnameeng}\&quot;,   \&quot;${mktteamleaderid}\&quot;,   \&quot;${mktzoneid}\&quot;,   \&quot;${mktzonecode}\&quot;,   \&quot;${mktzonenameeng}\&quot;,   \&quot;${dealercode}\&quot;,   \&quot;${dealernametha}\&quot;,   \&quot;${dealernameeng}\&quot;,   \&quot;${dealerstatus}\&quot;,   \&quot;${dealerprohibit}\&quot;,   \&quot;${showroomid}\&quot;,   \&quot;${showroomcode}\&quot;,   \&quot;${showroomnametha}\&quot;,   \&quot;${showroomnameeng}\&quot;,   \&quot;${dealeroffsetflag}\&quot;,   \&quot;${verifyncbflag}\&quot;,   \&quot;${ncbconsentno}\&quot;,   \&quot;${requestdate}\&quot;,   \&quot;${contractdate}\&quot;,   \&quot;${applicationstatus}\&quot;,   \&quot;${ncb01}\&quot;,   \&quot;${ncb02}\&quot;,   \&quot;${ncb03}\&quot;,   \&quot;${ncb04}\&quot;,   \&quot;${ncb05}\&quot;,   \&quot;${adddatetime}\&quot;,   \&quot;${verifyncbdatetime}\&quot;,   \&quot;${pendingdatetime}\&quot;,   \&quot;${finishdatetime}\&quot;,   \&quot;${supportday}\&quot;,   \&quot;${supporttime}\&quot;,   \&quot;${creditday}\&quot;,   \&quot;${credittime}\&quot;,   \&quot;${totalpendingday}\&quot;,   \&quot;${totalpendingtime}\&quot;,   \&quot;${totalfinishday}\&quot;,   \&quot;${totalfinishtime}\&quot;,   \&quot;${overridedate}\&quot;,   \&quot;${overridepersonuserid}\&quot;,   \&quot;${overridepersonname}\&quot;,   \&quot;${creditanalystuserid}\&quot;,   \&quot;${creditanalystusername}\&quot;,   \&quot;${creditanalystname}\&quot;,   \&quot;${approvaluserid}\&quot;,   \&quot;${approvalname}\&quot;,   \&quot;${approvedflag}\&quot;,   \&quot;${approveddate}\&quot;,   \&quot;${approvedreason}\&quot;,   \&quot;${canceldate}\&quot;,   \&quot;${cancelreasoncode}\&quot;,   \&quot;${cancelreasonname}\&quot;,   \&quot;${cancelreasonnote}\&quot;,   \&quot;${activeflag}\&quot;,   \&quot;${createdate}\&quot;,   \&quot;${createdate}\&quot;,   \&quot;${createby}\&quot;,   \&quot;${createbyname}\&quot;,   \&quot;${updatedate}\&quot;,   \&quot;${updateby}\&quot;,   \&quot;${creditanalysispassbranchid}\&quot;,   \&quot;${creditanalysispassbranchcode}\&quot;,   \&quot;${creditanalysispassbranchname}\&quot;,   \&quot;${cashout}\&quot;,   \&quot;${smsfielddatetime}\&quot;,   \&quot;${assignedapprovaluserid}\&quot;,   \&quot;${assignedapprovalname}\&quot;,   \&quot;${bigbike}\&quot;,   \&quot;${interestper}\&quot;,   \&quot;${subproducttype}\&quot;,   \&quot;${modelgroupcode}\&quot;,   \&quot;${conditioncode}\&quot;,   \&quot;${caramt}\&quot;,   \&quot;${downamt}\&quot;,   \&quot;${wholesaleprice}\&quot;,   \&quot;${producttype}\&quot;,   \&quot;${startcode}\&quot;,   \&quot;${startsystem}\&quot;,   \&quot;${breakcode}\&quot;,   \&quot;${breaksystem}\&quot;,   \&quot;${wheelcode}\&quot;,   \&quot;${wheelsystem}\&quot;,   \&quot;${gearcode}\&quot;,   \&quot;${gear}\&quot;,   \&quot;${cc}\&quot;,   \&quot;${firstduedate}\&quot;,   \&quot;${colorcode}\&quot;,   \&quot;${colornameeng}\&quot;,   \&quot;${paydate}\&quot;,   \&quot;${areacode}\&quot;,   \&quot;${areanameeng}\&quot;,   \&quot;${idcard}\&quot;,   \&quot;${ageyear}\&quot;,   \&quot;${birthdate}\&quot;,   \&quot;${residenttypecode}\&quot;,   \&quot;${maritalstatuscode}\&quot;,   \&quot;${occupationtypecode}\&quot;,   \&quot;${occupationgroupcode}\&quot;,   \&quot;${occupnameeng}\&quot;,   \&quot;${occupgrdnameeng}\&quot;,   \&quot;${businesstype}\&quot;,   \&quot;${outstandingpercent}\&quot;,   \&quot;${usertype}\&quot;,   \&quot;${paytype}\&quot;,   \&quot;${livingplaceperiodyear}\&quot;,   \&quot;${livingplaceperiodmonth}\&quot;,   \&quot;${ageofworkyear}\&quot;,   \&quot;${ageofworkmonth}\&quot;,   \&quot;${incometotal}\&quot;,   \&quot;${sex}\&quot;,   \&quot;${slip}\&quot;,   \&quot;${description}\&quot;,   \&quot;${campaigndescstring}\&quot;,   \&quot;${overridepositioncode}\&quot;,   \&quot;${overridecriteria}\&quot;,   \&quot;${showroomverify}\&quot;,   \&quot;${showroomzipcode}\&quot;,   \&quot;${highriskcmos}\&quot;,   \&quot;${highriskdealers}\&quot;,   \&quot;${cardexpireddate}\&quot;,   \&quot;${diff}\&quot;,   \&quot;${contracttypecode}\&quot;,   \&quot;${applydate}\&quot;,   \&quot;${subproducttypecode}\&quot;,   \&quot;${saleschannelcode}\&quot;,   \&quot;${salesregioncode}\&quot;,   \&quot;${saleszonecode}\&quot;,   \&quot;${salesbranchcode}\&quot;,   \&quot;${loanpurposecode}\&quot;,   \&quot;${paymentchannelcode}\&quot;,   \&quot;${requestminfinanceamt}\&quot;,   \&quot;${requestmaxfinanceamt}\&quot;,   \&quot;${requestterm}\&quot;,   \&quot;${selectedterm}\&quot;,   \&quot;${appbranchcode}\&quot;,   \&quot;${appzonecode}\&quot;,   \&quot;${appregioncode}\&quot;,   \&quot;${installmentnoninncb}\&quot;,   \&quot;${appbranchname}\&quot;,   \&quot;${applicationstatusname}\&quot;,   \&quot;${shortfromflag}\&quot;,   \&quot;${capturetype}\&quot;,   \&quot;${reactivatetypecode}\&quot;,   \&quot;${refoldrequestno}\&quot;,   \&quot;${adjustadditionalmonthlydebt}\&quot;,   \&quot;${totaldbrafteradjust}\&quot;,   \&quot;${totalmonthlydebtafteradjust}\&quot;,   \&quot;${hrsegment}\&quot;,   \&quot;${retentionsms}\&quot;,   \&quot;${ncbscorename}\&quot;,   \&quot;${ncbscore}\&quot;,   \&quot;${ncbscoregrade}\&quot;,   \&quot;${ncbscoredescription}\&quot;,   \&quot;${ncbodds}\&quot;,   \&quot;${ncbreason1}\&quot;,   \&quot;${ncbreason2}\&quot;,   \&quot;${ncbreason3}\&quot;,   \&quot;${ncbreason4}\&quot;,   \&quot;${ncbreason5}\&quot;,   \&quot;${utilzationnumrevolvinggt80}\&quot;,   \&quot;${utilzationnumccgt80}\&quot;,   \&quot;${newaccountnumunsecure}\&quot;,   \&quot;${unsecuredexposure}\&quot;,   \&quot;${scoringconsent}\&quot;,   \&quot;${consentdate}\&quot;,   \&quot;${refconditioncode}\&quot;,   \&quot;${brokerascustomer}\&quot;,   \&quot;${brokerasguarantor}\&quot;,   \&quot;${topdealer}\&quot;,   \&quot;${skippayment}\&quot;,   \&quot;${refskippaymentterm}\&quot;,   \&quot;${retentionflag}\&quot;,   \&quot;${workpermitexpireddate}\&quot;,   \&quot;${diffworkpermit}\&quot;,   \&quot;${retailprice}\&quot;,   \&quot;${occupsubgroupcode}\&quot;,   \&quot;${occupsubgrpnameeng}\&quot;,   \&quot;${numberofrental}\&quot;,   \&quot;${houseandworksameaddress}\&quot;,   \&quot;${suspectcode}\&quot;,   \&quot;${suspectdesc}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Application_Loan_Tier_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;TIERNO \&quot;: \&quot;String\&quot;     },    {        \&quot;TERMSTART \&quot;: \&quot;String\&quot;     },    {        \&quot;TERMEND \&quot;: \&quot;String\&quot;     },    {        \&quot;INTEREST \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${tierno}\&quot;,   \&quot;${termstart}\&quot;,   \&quot;${termend}\&quot;,   \&quot;${interest}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Application_Status_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;IDCARDNUMBER \&quot;: \&quot;String\&quot;     },    {        \&quot;APPLICATIONSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;DECISION_DATE \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUEST_NO \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${idcardnumber}\&quot;,   \&quot;${applicationstatus}\&quot;,   \&quot;${decision_date}\&quot;,   \&quot;${requestdate}\&quot;,   \&quot;${request_no}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Asset_Status_History_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;PREASSETSTATUSCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRASSETSTATUSCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OVERDUEEXVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;VATOVERDUE \&quot;: \&quot;String\&quot;     },    {        \&quot;ADVANCEAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;ADVANCEEXVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;INSURANCEASSET \&quot;: \&quot;String\&quot;     },    {        \&quot;REMARK \&quot;: \&quot;String\&quot;     },    {        \&quot;UPDATEBY \&quot;: \&quot;String\&quot;     },    {        \&quot;UPDATEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;ACCOUNTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CLOSESTATUS \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${contractno}\&quot;,   \&quot;${preassetstatuscode}\&quot;,   \&quot;${currassetstatuscode}\&quot;,   \&quot;${overdueexvat}\&quot;,   \&quot;${vatoverdue}\&quot;,   \&quot;${advanceamt}\&quot;,   \&quot;${advanceexvat}\&quot;,   \&quot;${insuranceasset}\&quot;,   \&quot;${remark}\&quot;,   \&quot;${updateby}\&quot;,   \&quot;${updatedate}\&quot;,   \&quot;${accountdate}\&quot;,   \&quot;${closestatus}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Blacklist_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTNODISPLAY \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;IDCARDNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CUSTNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CUSTSURNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;BLACKLISTSOURCE \&quot;: \&quot;String\&quot;     },    {        \&quot;REMARK \&quot;: \&quot;String\&quot;     },    {        \&quot;CREATEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CREATEBYID \&quot;: \&quot;String\&quot;     },    {        \&quot;CREATEBYNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;UPDATEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;UPDATEBYID \&quot;: \&quot;String\&quot;     },    {        \&quot;UPDATEBYNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;HITDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;HITIDCARD \&quot;: \&quot;String\&quot;     },    {        \&quot;HITCUSTNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;HITCURRENTADDRESS \&quot;: \&quot;String\&quot;     },    {        \&quot;HITOFFICEADDRESS \&quot;: \&quot;String\&quot;     },    {        \&quot;HITMOBILETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;HITHOMETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;HITOFFICETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;HITWORKCOMPANY \&quot;: \&quot;String\&quot;     },    {        \&quot;PERSONTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIX \&quot;: \&quot;String\&quot;     },    {        \&quot;WORKCOMPANYNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;BLACKLISTREQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;BLACKLISTREQUESTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLADDRESS \&quot;: \&quot;String\&quot;     },    {        \&quot;ADDRESSNO \&quot;: \&quot;String\&quot;     },    {        \&quot;MOO \&quot;: \&quot;String\&quot;     },    {        \&quot;VILLAGE \&quot;: \&quot;String\&quot;     },    {        \&quot;FLOOR \&quot;: \&quot;String\&quot;     },    {        \&quot;ROOMNO \&quot;: \&quot;String\&quot;     },    {        \&quot;TROK \&quot;: \&quot;String\&quot;     },    {        \&quot;SOI \&quot;: \&quot;String\&quot;     },    {        \&quot;ROAD \&quot;: \&quot;String\&quot;     },    {        \&quot;SUBDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;DISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;PROVINCECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;ZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEFULLADDRESS \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEADDRESSNO \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEMOO \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEVILLAGE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEFLOOR \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEROOMNO \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETROK \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICESOI \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEROAD \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICESUBDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEPROVINCECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MOBILE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOMETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;HOMETELEND \&quot;: \&quot;String\&quot;     },    {        \&quot;HOMETELEXTSTART \&quot;: \&quot;String\&quot;     },    {        \&quot;HOMETELEXTEND \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETELEND \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETELEXTSTART \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETELEXTEND \&quot;: \&quot;String\&quot;     },    {        \&quot;DATASOURCE \&quot;: \&quot;String\&quot;     },    {        \&quot;LASTRETRIEVEDATE \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${requestnodisplay}\&quot;,   \&quot;${requestdate}\&quot;,   \&quot;${idcardno}\&quot;,   \&quot;${custname}\&quot;,   \&quot;${custsurname}\&quot;,   \&quot;${blacklistsource}\&quot;,   \&quot;${remark}\&quot;,   \&quot;${createdate}\&quot;,   \&quot;${createbyid}\&quot;,   \&quot;${createbyname}\&quot;,   \&quot;${updatedate}\&quot;,   \&quot;${updatebyid}\&quot;,   \&quot;${updatebyname}\&quot;,   \&quot;${hitdesc}\&quot;,   \&quot;${hitidcard}\&quot;,   \&quot;${hitcustname}\&quot;,   \&quot;${hitcurrentaddress}\&quot;,   \&quot;${hitofficeaddress}\&quot;,   \&quot;${hitmobiletel}\&quot;,   \&quot;${hithometel}\&quot;,   \&quot;${hitofficetel}\&quot;,   \&quot;${hitworkcompany}\&quot;,   \&quot;${persontype}\&quot;,   \&quot;${prefix}\&quot;,   \&quot;${workcompanyname}\&quot;,   \&quot;${blacklistrequestno}\&quot;,   \&quot;${blacklistrequestdate}\&quot;,   \&quot;${fulladdress}\&quot;,   \&quot;${addressno}\&quot;,   \&quot;${moo}\&quot;,   \&quot;${village}\&quot;,   \&quot;${floor}\&quot;,   \&quot;${roomno}\&quot;,   \&quot;${trok}\&quot;,   \&quot;${soi}\&quot;,   \&quot;${road}\&quot;,   \&quot;${subdistrictcode}\&quot;,   \&quot;${districtcode}\&quot;,   \&quot;${provincecode}\&quot;,   \&quot;${zipcode}\&quot;,   \&quot;${officefulladdress}\&quot;,   \&quot;${officeaddressno}\&quot;,   \&quot;${officemoo}\&quot;,   \&quot;${officevillage}\&quot;,   \&quot;${officefloor}\&quot;,   \&quot;${officeroomno}\&quot;,   \&quot;${officetrok}\&quot;,   \&quot;${officesoi}\&quot;,   \&quot;${officeroad}\&quot;,   \&quot;${officesubdistrictcode}\&quot;,   \&quot;${officedistrictcode}\&quot;,   \&quot;${officeprovincecode}\&quot;,   \&quot;${officezipcode}\&quot;,   \&quot;${mobile}\&quot;,   \&quot;${hometel}\&quot;,   \&quot;${hometelend}\&quot;,   \&quot;${hometelextstart}\&quot;,   \&quot;${hometelextend}\&quot;,   \&quot;${officetel}\&quot;,   \&quot;${officetelend}\&quot;,   \&quot;${officetelextstart}\&quot;,   \&quot;${officetelextend}\&quot;,   \&quot;${datasource}\&quot;,   \&quot;${lastretrievedate}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Contract_History_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;CUSTOMERSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;APPLICATIONSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;REASON \&quot;: \&quot;String\&quot;     },    {        \&quot;APPROVEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPROVEBY \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${customerstatus}\&quot;,   \&quot;${applicationstatus}\&quot;,   \&quot;${reason}\&quot;,   \&quot;${approvedate}\&quot;,   \&quot;${approveby}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Credit_Verify_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CHECKRULERESULT \&quot;: \&quot;String\&quot;     },    {        \&quot;AMLRESULT \&quot;: \&quot;String\&quot;     },    {        \&quot;BLACKLISTRESULT \&quot;: \&quot;String\&quot;     },    {        \&quot;BANKRUPTCYRESULT \&quot;: \&quot;String\&quot;     },    {        \&quot;EXISTHISTRESULT \&quot;: \&quot;String\&quot;     },    {        \&quot;DUPAPPRESULT \&quot;: \&quot;String\&quot;     },    {        \&quot;DUPRELATEDPERSONRESULT \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBGRADE \&quot;: \&quot;String\&quot;     },    {        \&quot;SERVICEAREA \&quot;: \&quot;String\&quot;     },    {        \&quot;FRAUDDOCUMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;VALIDITYDOCUMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;CUSTOMERVERIFY \&quot;: \&quot;String\&quot;     },    {        \&quot;INCOMEVERIFY \&quot;: \&quot;String\&quot;     },    {        \&quot;COMPLIANCERESPONSE \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${checkruleresult}\&quot;,   \&quot;${amlresult}\&quot;,   \&quot;${blacklistresult}\&quot;,   \&quot;${bankruptcyresult}\&quot;,   \&quot;${existhistresult}\&quot;,   \&quot;${dupappresult}\&quot;,   \&quot;${duprelatedpersonresult}\&quot;,   \&quot;${ncbgrade}\&quot;,   \&quot;${servicearea}\&quot;,   \&quot;${frauddocument}\&quot;,   \&quot;${validitydocument}\&quot;,   \&quot;${customerverify}\&quot;,   \&quot;${incomeverify}\&quot;,   \&quot;${complianceresponse}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Customer_Collection_Person_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;SEQNO \&quot;: \&quot;String\&quot;     },    {        \&quot;RELATIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIX \&quot;: \&quot;String\&quot;     },    {        \&quot;NAME \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;TEL \&quot;: \&quot;String\&quot;     },    {        \&quot;TELEND \&quot;: \&quot;String\&quot;     },    {        \&quot;TELEXTSTART \&quot;: \&quot;String\&quot;     },    {        \&quot;TELEXTEND \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${seqno}\&quot;,   \&quot;${relationcode}\&quot;,   \&quot;${prefix}\&quot;,   \&quot;${name}\&quot;,   \&quot;${surname}\&quot;,   \&quot;${fullname}\&quot;,   \&quot;${tel}\&quot;,   \&quot;${telend}\&quot;,   \&quot;${telextstart}\&quot;,   \&quot;${telextend}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Duplicate_Application_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;IDCARD \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIX \&quot;: \&quot;String\&quot;     },    {        \&quot;NAME \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;DUPLICATEREQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPLICATIONSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;DECISIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPSTATUSDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTHOLDERUSER \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SALESCHANNELCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;LASTRETRIEVEDATE \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${idcard}\&quot;,   \&quot;${prefix}\&quot;,   \&quot;${name}\&quot;,   \&quot;${surname}\&quot;,   \&quot;${fullname}\&quot;,   \&quot;${duplicaterequestno}\&quot;,   \&quot;${contractno}\&quot;,   \&quot;${requestdate}\&quot;,   \&quot;${applicationstatus}\&quot;,   \&quot;${decisioncode}\&quot;,   \&quot;${appstatusdate}\&quot;,   \&quot;${currentholderuser}\&quot;,   \&quot;${mktcode}\&quot;,   \&quot;${saleschannelcode}\&quot;,   \&quot;${lastretrievedate}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Duplicate_Related_Person_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITBANKACCOUNTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;MOBILE \&quot;: \&quot;String\&quot;     },    {        \&quot;HITCREDITBANKACCOUNTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;HITMOBILETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;IDCARD \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIX \&quot;: \&quot;String\&quot;     },    {        \&quot;NAME \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;DUPLICATEREQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;DUPMOBILETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;APPLICATIONSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;DECISIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPSTATUSDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTHOLDERUSER \&quot;: \&quot;String\&quot;     },    {        \&quot;MKTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SALESCHANNELCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;LASTRETRIEVEDATE \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${creditbankaccountno}\&quot;,   \&quot;${mobile}\&quot;,   \&quot;${hitcreditbankaccountno}\&quot;,   \&quot;${hitmobiletel}\&quot;,   \&quot;${idcard}\&quot;,   \&quot;${prefix}\&quot;,   \&quot;${name}\&quot;,   \&quot;${surname}\&quot;,   \&quot;${fullname}\&quot;,   \&quot;${duplicaterequestno}\&quot;,   \&quot;${contractno}\&quot;,   \&quot;${requestdate}\&quot;,   \&quot;${dupmobiletel}\&quot;,   \&quot;${applicationstatus}\&quot;,   \&quot;${decisioncode}\&quot;,   \&quot;${appstatusdate}\&quot;,   \&quot;${currentholderuser}\&quot;,   \&quot;${mktcode}\&quot;,   \&quot;${saleschannelcode}\&quot;,   \&quot;${lastretrievedate}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Existing_Applicant_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;IDCARD \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIX \&quot;: \&quot;String\&quot;     },    {        \&quot;NAME \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;MOB \&quot;: \&quot;String\&quot;     },    {        \&quot;PRODUCTTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SUBPRODUCTTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;LATESTDQSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTBLOCKCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;LOANAMOUNT \&quot;: \&quot;String\&quot;     },    {        \&quot;OUTSTANDINGBALANCE \&quot;: \&quot;String\&quot;     },    {        \&quot;PAYMENTHISTORY \&quot;: \&quot;String\&quot;     },    {        \&quot;NOOFXDAY \&quot;: \&quot;String\&quot;     },    {        \&quot;NOOF30DAY \&quot;: \&quot;String\&quot;     },    {        \&quot;NOOF60DAY \&quot;: \&quot;String\&quot;     },    {        \&quot;CLOSESTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;CLOSEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;LASTRETRIEVEDATE \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${idcard}\&quot;,   \&quot;${prefix}\&quot;,   \&quot;${name}\&quot;,   \&quot;${surname}\&quot;,   \&quot;${fullname}\&quot;,   \&quot;${contractno}\&quot;,   \&quot;${contractdate}\&quot;,   \&quot;${mob}\&quot;,   \&quot;${producttypecode}\&quot;,   \&quot;${subproducttypecode}\&quot;,   \&quot;${latestdqstatus}\&quot;,   \&quot;${currentblockcode}\&quot;,   \&quot;${loanamount}\&quot;,   \&quot;${outstandingbalance}\&quot;,   \&quot;${paymenthistory}\&quot;,   \&quot;${noofxday}\&quot;,   \&quot;${noof30day}\&quot;,   \&quot;${noof60day}\&quot;,   \&quot;${closestatus}\&quot;,   \&quot;${closedate}\&quot;,   \&quot;${lastretrievedate}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Existing_Application_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNUMBER \&quot;: \&quot;String\&quot;     },    {        \&quot;IDCARDNUMBER \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTNUMBER \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPROVEDDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;FIRSTDUEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPLICATIONSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;TERM \&quot;: \&quot;String\&quot;     },    {        \&quot;CAMPAIGNCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;FINANCEEXVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;INSTALLMENTEXVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;INSTALLMENTAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;HISTORYPAYMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;LATESTPAYMENTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;LATESTASSETSTATUSCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;LATESTASSETSTATUSDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;REJECTCODE1 \&quot;: \&quot;String\&quot;     },    {        \&quot;REJECTREASON1 \&quot;: \&quot;String\&quot;     },    {        \&quot;REJECTCODE2 \&quot;: \&quot;String\&quot;     },    {        \&quot;REJECTREASON2 \&quot;: \&quot;String\&quot;     },    {        \&quot;REJECTCODE3 \&quot;: \&quot;String\&quot;     },    {        \&quot;REJECTREASON3 \&quot;: \&quot;String\&quot;     },    {        \&quot;REJECTCODE4 \&quot;: \&quot;String\&quot;     },    {        \&quot;REJECTREASON4 \&quot;: \&quot;String\&quot;     },    {        \&quot;REJECTCODE5 \&quot;: \&quot;String\&quot;     },    {        \&quot;REJECTREASON5 \&quot;: \&quot;String\&quot;     },    {        \&quot;CARTYPENAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CLOSE_STATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;CLOSE_DATE \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestnumber}\&quot;,   \&quot;${idcardnumber}\&quot;,   \&quot;${contractnumber}\&quot;,   \&quot;${requestdate}\&quot;,   \&quot;${approveddate}\&quot;,   \&quot;${contractdate}\&quot;,   \&quot;${firstduedate}\&quot;,   \&quot;${applicationstatus}\&quot;,   \&quot;${term}\&quot;,   \&quot;${campaigncode}\&quot;,   \&quot;${financeexvat}\&quot;,   \&quot;${installmentexvat}\&quot;,   \&quot;${contractamt}\&quot;,   \&quot;${installmentamt}\&quot;,   \&quot;${historypayment}\&quot;,   \&quot;${latestpaymentdate}\&quot;,   \&quot;${latestassetstatuscode}\&quot;,   \&quot;${latestassetstatusdate}\&quot;,   \&quot;${rejectcode1}\&quot;,   \&quot;${rejectreason1}\&quot;,   \&quot;${rejectcode2}\&quot;,   \&quot;${rejectreason2}\&quot;,   \&quot;${rejectcode3}\&quot;,   \&quot;${rejectreason3}\&quot;,   \&quot;${rejectcode4}\&quot;,   \&quot;${rejectreason4}\&quot;,   \&quot;${rejectcode5}\&quot;,   \&quot;${rejectreason5}\&quot;,   \&quot;${cartypename}\&quot;,   \&quot;${close_status}\&quot;,   \&quot;${close_date}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Guarantor_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;GUARSEQNO \&quot;: \&quot;String\&quot;     },    {        \&quot;IDCARD \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIXCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIX \&quot;: \&quot;String\&quot;     },    {        \&quot;NAME \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;MOBILE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOMETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;RELATIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;RELATIONDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;NATIONALITY \&quot;: \&quot;String\&quot;     },    {        \&quot;PERSONTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;BIRTHDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEDAY \&quot;: \&quot;String\&quot;     },    {        \&quot;MILITARYSERVICECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;RESIDENTTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;COMPANYCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;COMPANYCATEGORYCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;RESPONSIBILITY \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPATIONGROUPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPATIONTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;BUSINESSTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CREATEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CREATEBY \&quot;: \&quot;String\&quot;     },    {        \&quot;UPDATEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;UPDATEBY \&quot;: \&quot;String\&quot;     },    {        \&quot;OPINION \&quot;: \&quot;String\&quot;     },    {        \&quot;INCOMETOTAL \&quot;: \&quot;String\&quot;     },    {        \&quot;INCOMEPERINSTALLMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;LIVINGPLACEPERIODYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;LIVINGPLACEPERIODMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEOFWORKYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEOFWORKMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEADDRESSNO \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEMOO \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEVILLAGE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEFLOOR \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEROOMNO \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSETROK \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSESOI \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEROAD \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSESUBDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSESUBDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEPROVINCECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEPROVINCE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTADDRESSNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTMOO \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTVILLAGE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTFLOOR \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTROOMNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTTROK \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTSOI \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTROAD \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTSUBDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTSUBDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTPROVINCECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTPROVINCE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICECOMPANY \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEADDRESSNO \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEMOO \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEVILLAGE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEFLOOR \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEROOMNO \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETROK \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICESOI \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEROAD \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICESUBDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICESUBDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEPROVINCECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEPROVINCE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGADDRESSNO \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILILNGMOO \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGVILLAGE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGFLOOR \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGROOMNO \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGTROK \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGSOI \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGROAD \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGSUBDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGSUBDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGPROVINCECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGPROVINCE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;EXISTINGGUARANTORFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;BLACKLISTFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;DATAMARTPROFILEFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;INSURANCEFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;GUARANTORTARGETAREA \&quot;: \&quot;String\&quot;     },    {        \&quot;GUARANTORSERVICEAREA \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPSUBGROUPCODE \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${guarseqno}\&quot;,   \&quot;${idcard}\&quot;,   \&quot;${prefixcode}\&quot;,   \&quot;${prefix}\&quot;,   \&quot;${name}\&quot;,   \&quot;${surname}\&quot;,   \&quot;${fullname}\&quot;,   \&quot;${mobile}\&quot;,   \&quot;${hometel}\&quot;,   \&quot;${relationcode}\&quot;,   \&quot;${relationdesc}\&quot;,   \&quot;${nationality}\&quot;,   \&quot;${persontypecode}\&quot;,   \&quot;${birthdate}\&quot;,   \&quot;${ageyear}\&quot;,   \&quot;${agemonth}\&quot;,   \&quot;${ageday}\&quot;,   \&quot;${militaryservicecode}\&quot;,   \&quot;${residenttypecode}\&quot;,   \&quot;${officetel}\&quot;,   \&quot;${companycode}\&quot;,   \&quot;${companycategorycode}\&quot;,   \&quot;${responsibility}\&quot;,   \&quot;${occupationgroupcode}\&quot;,   \&quot;${occupationtypecode}\&quot;,   \&quot;${businesstypecode}\&quot;,   \&quot;${createdate}\&quot;,   \&quot;${createby}\&quot;,   \&quot;${updatedate}\&quot;,   \&quot;${updateby}\&quot;,   \&quot;${opinion}\&quot;,   \&quot;${incometotal}\&quot;,   \&quot;${incomeperinstallment}\&quot;,   \&quot;${livingplaceperiodyear}\&quot;,   \&quot;${livingplaceperiodmonth}\&quot;,   \&quot;${ageofworkyear}\&quot;,   \&quot;${ageofworkmonth}\&quot;,   \&quot;${houseaddressno}\&quot;,   \&quot;${housemoo}\&quot;,   \&quot;${housevillage}\&quot;,   \&quot;${housefloor}\&quot;,   \&quot;${houseroomno}\&quot;,   \&quot;${housetrok}\&quot;,   \&quot;${housesoi}\&quot;,   \&quot;${houseroad}\&quot;,   \&quot;${housesubdistrictcode}\&quot;,   \&quot;${housesubdistrict}\&quot;,   \&quot;${housedistrictcode}\&quot;,   \&quot;${housedistrict}\&quot;,   \&quot;${houseprovincecode}\&quot;,   \&quot;${houseprovince}\&quot;,   \&quot;${housezipcode}\&quot;,   \&quot;${currentaddressno}\&quot;,   \&quot;${currentmoo}\&quot;,   \&quot;${currentvillage}\&quot;,   \&quot;${currentfloor}\&quot;,   \&quot;${currentroomno}\&quot;,   \&quot;${currenttrok}\&quot;,   \&quot;${currentsoi}\&quot;,   \&quot;${currentroad}\&quot;,   \&quot;${currentsubdistrictcode}\&quot;,   \&quot;${currentsubdistrict}\&quot;,   \&quot;${currentdistrictcode}\&quot;,   \&quot;${currentdistrict}\&quot;,   \&quot;${currentprovincecode}\&quot;,   \&quot;${currentprovince}\&quot;,   \&quot;${currentzipcode}\&quot;,   \&quot;${officecompany}\&quot;,   \&quot;${officeaddressno}\&quot;,   \&quot;${officemoo}\&quot;,   \&quot;${officevillage}\&quot;,   \&quot;${officefloor}\&quot;,   \&quot;${officeroomno}\&quot;,   \&quot;${officetrok}\&quot;,   \&quot;${officesoi}\&quot;,   \&quot;${officeroad}\&quot;,   \&quot;${officesubdistrictcode}\&quot;,   \&quot;${officesubdistrict}\&quot;,   \&quot;${officedistrictcode}\&quot;,   \&quot;${officedistrict}\&quot;,   \&quot;${officeprovincecode}\&quot;,   \&quot;${officeprovince}\&quot;,   \&quot;${officezipcode}\&quot;,   \&quot;${mailingaddressno}\&quot;,   \&quot;${maililngmoo}\&quot;,   \&quot;${mailingvillage}\&quot;,   \&quot;${mailingfloor}\&quot;,   \&quot;${mailingroomno}\&quot;,   \&quot;${mailingtrok}\&quot;,   \&quot;${mailingsoi}\&quot;,   \&quot;${mailingroad}\&quot;,   \&quot;${mailingsubdistrictcode}\&quot;,   \&quot;${mailingsubdistrict}\&quot;,   \&quot;${mailingdistrictcode}\&quot;,   \&quot;${mailingdistrict}\&quot;,   \&quot;${mailingprovincecode}\&quot;,   \&quot;${mailingprovince}\&quot;,   \&quot;${mailingzipcode}\&quot;,   \&quot;${existingguarantorflag}\&quot;,   \&quot;${blacklistflag}\&quot;,   \&quot;${datamartprofileflag}\&quot;,   \&quot;${insuranceflag}\&quot;,   \&quot;${guarantortargetarea}\&quot;,   \&quot;${guarantorservicearea}\&quot;,   \&quot;${occupsubgroupcode}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;HP_Reference_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;HPREFNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;HPREFSURNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;HPREFRELATIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;HPREFRELATIONNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;HPREFTEL1 \&quot;: \&quot;String\&quot;     },    {        \&quot;HPREFTEL2 \&quot;: \&quot;String\&quot;     },    {        \&quot;HPREFPROVINCENAME \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${hprefname}\&quot;,   \&quot;${hprefsurname}\&quot;,   \&quot;${hprefrelationcode}\&quot;,   \&quot;${hprefrelationname}\&quot;,   \&quot;${hpreftel1}\&quot;,   \&quot;${hpreftel2}\&quot;,   \&quot;${hprefprovincename}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;History_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;IDCARDNO \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;HOMETELNO \&quot;: \&quot;String\&quot;     },    {        \&quot;HOMETELNODISPLAY \&quot;: \&quot;String\&quot;     },    {        \&quot;MOBILETELNO \&quot;: \&quot;String\&quot;     },    {        \&quot;MOBILETELNODISPLAY \&quot;: \&quot;String\&quot;     },    {        \&quot;STATUSTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTNODISPLAY \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPLICATIONSTATUSCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPLICATIONSTATUSNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;REASON \&quot;: \&quot;String\&quot;     },    {        \&quot;APPROVEDDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CANCELDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;APPROVALNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITANALYSISREPORT \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTNODISPLAY \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTINFO \&quot;: \&quot;String\&quot;     },    {        \&quot;ARCARD \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${idcardno}\&quot;,   \&quot;${fullname}\&quot;,   \&quot;${hometelno}\&quot;,   \&quot;${hometelnodisplay}\&quot;,   \&quot;${mobiletelno}\&quot;,   \&quot;${mobiletelnodisplay}\&quot;,   \&quot;${statustype}\&quot;,   \&quot;${requestno}\&quot;,   \&quot;${requestnodisplay}\&quot;,   \&quot;${requestdate}\&quot;,   \&quot;${applicationstatuscode}\&quot;,   \&quot;${applicationstatusname}\&quot;,   \&quot;${reason}\&quot;,   \&quot;${approveddate}\&quot;,   \&quot;${canceldate}\&quot;,   \&quot;${approvalname}\&quot;,   \&quot;${creditanalysisreport}\&quot;,   \&quot;${contractno}\&quot;,   \&quot;${contractnodisplay}\&quot;,   \&quot;${contractdate}\&quot;,   \&quot;${contractinfo}\&quot;,   \&quot;${arcard}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Insurance_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CUSTNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CUSTSURNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;INSURANCEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CLAIMTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;CUSTFULLNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;IDCARD \&quot;: \&quot;String\&quot;     },    {        \&quot;APPLICANTTYPE \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${custname}\&quot;,   \&quot;${custsurname}\&quot;,   \&quot;${insurancedate}\&quot;,   \&quot;${claimtype}\&quot;,   \&quot;${custfullname}\&quot;,   \&quot;${idcard}\&quot;,   \&quot;${applicanttype}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Mailing_Address_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;MAILINGDOCTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGDOCTYPEDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;ADDRESSTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;ADDRESSTYPEDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;COMPANY \&quot;: \&quot;String\&quot;     },    {        \&quot;ADDRESSNO \&quot;: \&quot;String\&quot;     },    {        \&quot;MOO \&quot;: \&quot;String\&quot;     },    {        \&quot;VILLAGE \&quot;: \&quot;String\&quot;     },    {        \&quot;FLOOR \&quot;: \&quot;String\&quot;     },    {        \&quot;ROOMNO \&quot;: \&quot;String\&quot;     },    {        \&quot;TROK \&quot;: \&quot;String\&quot;     },    {        \&quot;SOI \&quot;: \&quot;String\&quot;     },    {        \&quot;ROAD \&quot;: \&quot;String\&quot;     },    {        \&quot;SUBDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SUBDISTRICTNAMETHA \&quot;: \&quot;String\&quot;     },    {        \&quot;DISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;DISTRICTNAMETHA \&quot;: \&quot;String\&quot;     },    {        \&quot;PROVINCECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;PROVINCENAMETHA \&quot;: \&quot;String\&quot;     },    {        \&quot;ZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${mailingdoctypecode}\&quot;,   \&quot;${mailingdoctypedesc}\&quot;,   \&quot;${addresstypecode}\&quot;,   \&quot;${addresstypedesc}\&quot;,   \&quot;${company}\&quot;,   \&quot;${addressno}\&quot;,   \&quot;${moo}\&quot;,   \&quot;${village}\&quot;,   \&quot;${floor}\&quot;,   \&quot;${roomno}\&quot;,   \&quot;${trok}\&quot;,   \&quot;${soi}\&quot;,   \&quot;${road}\&quot;,   \&quot;${subdistrictcode}\&quot;,   \&quot;${subdistrictnametha}\&quot;,   \&quot;${districtcode}\&quot;,   \&quot;${districtnametha}\&quot;,   \&quot;${provincecode}\&quot;,   \&quot;${provincenametha}\&quot;,   \&quot;${zipcode}\&quot;,   \&quot;${requestno}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;NCB_Account_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;IDCARDNUMBER \&quot;: \&quot;String\&quot;     },    {        \&quot;RUNNINGSUBJECT \&quot;: \&quot;String\&quot;     },    {        \&quot;RUNNINGACCOUNT \&quot;: \&quot;String\&quot;     },    {        \&quot;MEMBERCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MEMBERSHORTNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;ACCOUNTNUMBER \&quot;: \&quot;String\&quot;     },    {        \&quot;ACCOUNTTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;OWNERSHIPINDICATOR \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENCYCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;DATEACCOUNTOPENED \&quot;: \&quot;String\&quot;     },    {        \&quot;DATEOFLASTPAYMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;DATEACCOUNTCLOSED \&quot;: \&quot;String\&quot;     },    {        \&quot;ASOFDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITLIMITORIGINALLOANAMOUNT \&quot;: \&quot;String\&quot;     },    {        \&quot;AMOUNTOWED \&quot;: \&quot;String\&quot;     },    {        \&quot;AMOUNTPASTDUE \&quot;: \&quot;String\&quot;     },    {        \&quot;DEFAULTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;INSTALLMENTFREQUENCY \&quot;: \&quot;String\&quot;     },    {        \&quot;INSTALLMENTAMOUNT \&quot;: \&quot;String\&quot;     },    {        \&quot;INSTALLMENTNUMBEROFPAYMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;PAYMENTHISTORYSTARTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;PAYMENTHISTORYENDDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;LOANOBJECTIVE \&quot;: \&quot;String\&quot;     },    {        \&quot;DATEOFLASTDEBTRESTRUCTURE \&quot;: \&quot;String\&quot;     },    {        \&quot;PERCENTPAYMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;TYPEOFCREDITCARD \&quot;: \&quot;String\&quot;     },    {        \&quot;NUMBEROFCOBORROWERS \&quot;: \&quot;String\&quot;     },    {        \&quot;UNITMAKE \&quot;: \&quot;String\&quot;     },    {        \&quot;UNITMODEL \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;DESCACCTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;DESCOWNERSHIP \&quot;: \&quot;String\&quot;     },    {        \&quot;DESCACCSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;DESCCREDITTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;DESCLOANCLASS \&quot;: \&quot;String\&quot;     },    {        \&quot;PAYMT \&quot;: \&quot;String\&quot;     },    {        \&quot;PAYMTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;DESCNUMDAY \&quot;: \&quot;String\&quot;     },    {        \&quot;IDTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;DESCIDTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;NAMECUSTOMER \&quot;: \&quot;String\&quot;     },    {        \&quot;ADDRESSCUSTOMER \&quot;: \&quot;String\&quot;     },    {        \&quot;ACCOUNTSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;COLLATERAL1 \&quot;: \&quot;String\&quot;     },    {        \&quot;COLLATERAL2 \&quot;: \&quot;String\&quot;     },    {        \&quot;COLLATERAL3 \&quot;: \&quot;String\&quot;     },    {        \&quot;ENQUIRYDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;TOTALMONTHLYDEBTAFTERADJUST \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${idcardnumber}\&quot;,   \&quot;${runningsubject}\&quot;,   \&quot;${runningaccount}\&quot;,   \&quot;${membercode}\&quot;,   \&quot;${membershortname}\&quot;,   \&quot;${accountnumber}\&quot;,   \&quot;${accounttype}\&quot;,   \&quot;${ownershipindicator}\&quot;,   \&quot;${currencycode}\&quot;,   \&quot;${dateaccountopened}\&quot;,   \&quot;${dateoflastpayment}\&quot;,   \&quot;${dateaccountclosed}\&quot;,   \&quot;${asofdate}\&quot;,   \&quot;${creditlimitoriginalloanamount}\&quot;,   \&quot;${amountowed}\&quot;,   \&quot;${amountpastdue}\&quot;,   \&quot;${defaultdate}\&quot;,   \&quot;${installmentfrequency}\&quot;,   \&quot;${installmentamount}\&quot;,   \&quot;${installmentnumberofpayment}\&quot;,   \&quot;${paymenthistorystartdate}\&quot;,   \&quot;${paymenthistoryenddate}\&quot;,   \&quot;${loanobjective}\&quot;,   \&quot;${dateoflastdebtrestructure}\&quot;,   \&quot;${percentpayment}\&quot;,   \&quot;${typeofcreditcard}\&quot;,   \&quot;${numberofcoborrowers}\&quot;,   \&quot;${unitmake}\&quot;,   \&quot;${unitmodel}\&quot;,   \&quot;${credittype}\&quot;,   \&quot;${descacctype}\&quot;,   \&quot;${descownership}\&quot;,   \&quot;${descaccstatus}\&quot;,   \&quot;${desccredittype}\&quot;,   \&quot;${descloanclass}\&quot;,   \&quot;${paymt}\&quot;,   \&quot;${paymtdate}\&quot;,   \&quot;${descnumday}\&quot;,   \&quot;${idtypecode}\&quot;,   \&quot;${descidtype}\&quot;,   \&quot;${namecustomer}\&quot;,   \&quot;${addresscustomer}\&quot;,   \&quot;${accountstatus}\&quot;,   \&quot;${collateral1}\&quot;,   \&quot;${collateral2}\&quot;,   \&quot;${collateral3}\&quot;,   \&quot;${enquirydate}\&quot;,   \&quot;${totalmonthlydebtafteradjust}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;NCB_Enquiry_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;IDCARDNO \&quot;: \&quot;String\&quot;     },    {        \&quot;RUNNINGSUBJECT \&quot;: \&quot;String\&quot;     },    {        \&quot;RUNNINGENQ \&quot;: \&quot;String\&quot;     },    {        \&quot;ENQUIRYDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;ENQUIRYTIME \&quot;: \&quot;String\&quot;     },    {        \&quot;MEMBERSHORTNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;ENQUIRYPURPOSE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENCYCODE \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${idcardno}\&quot;,   \&quot;${runningsubject}\&quot;,   \&quot;${runningenq}\&quot;,   \&quot;${enquirydate}\&quot;,   \&quot;${enquirytime}\&quot;,   \&quot;${membershortname}\&quot;,   \&quot;${enquirypurpose}\&quot;,   \&quot;${currencycode}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Name_Change_History_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;PREFIX \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIXNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;NAME \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAME \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${prefix}\&quot;,   \&quot;${prefixname}\&quot;,   \&quot;${name}\&quot;,   \&quot;${surname}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Occupation_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;COMPANYCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;COMPANYNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;RESPONSIBILITY \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPATIONGROUPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPGRDNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPATIONTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;BUSINESSTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;BUSINESSTYPENAME \&quot;: \&quot;String\&quot;     },    {        \&quot;INCOME \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;DEPARTMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;POSITION \&quot;: \&quot;String\&quot;     },    {        \&quot;COMPANYREGISCERTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;SALARYAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;OTHERINCOMEAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;BONUSTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;BONUSAMTPERYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;BONUSMONTHPERYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;BONUSAMTPERMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITTURNOVERAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;PROFITMARGINPERCENT \&quot;: \&quot;String\&quot;     },    {        \&quot;GROSSINCOMEAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;VERIFYINCOMEAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTJOBLONGEVITYYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTJOBLONGEVITYMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;PREVIOUSWORKPLACE \&quot;: \&quot;String\&quot;     },    {        \&quot;PREVIOUSBUSINESSTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;PREVIOUSOFFICETEL \&quot;: \&quot;String\&quot;     },    {        \&quot;PREVIOUSOFFICETELEND \&quot;: \&quot;String\&quot;     },    {        \&quot;PREVIOUSOFFICETELEXTSTART \&quot;: \&quot;String\&quot;     },    {        \&quot;PREVIOUSOFFICETELEXTEND \&quot;: \&quot;String\&quot;     },    {        \&quot;PREVIOUSJOBLONGEVITYYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;PREVIOUSJOBLONGEVITYMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;TOTALJOBLONGEVITYYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;TOTALJOBLONGEVITYMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;SALARYPAYMENTMETHOD \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPSUBGROUPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPSUBGRPNAMEENG \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${companycode}\&quot;,   \&quot;${companyname}\&quot;,   \&quot;${responsibility}\&quot;,   \&quot;${occupationgroupcode}\&quot;,   \&quot;${occupgrdnameeng}\&quot;,   \&quot;${occupationtypecode}\&quot;,   \&quot;${occupnameeng}\&quot;,   \&quot;${businesstype}\&quot;,   \&quot;${businesstypename}\&quot;,   \&quot;${income}\&quot;,   \&quot;${requestno}\&quot;,   \&quot;${department}\&quot;,   \&quot;${position}\&quot;,   \&quot;${companyregiscertno}\&quot;,   \&quot;${salaryamt}\&quot;,   \&quot;${otherincomeamt}\&quot;,   \&quot;${bonustypecode}\&quot;,   \&quot;${bonusamtperyear}\&quot;,   \&quot;${bonusmonthperyear}\&quot;,   \&quot;${bonusamtpermonth}\&quot;,   \&quot;${creditturnoveramt}\&quot;,   \&quot;${profitmarginpercent}\&quot;,   \&quot;${grossincomeamt}\&quot;,   \&quot;${verifyincomeamt}\&quot;,   \&quot;${currentjoblongevityyear}\&quot;,   \&quot;${currentjoblongevitymonth}\&quot;,   \&quot;${previousworkplace}\&quot;,   \&quot;${previousbusinesstypecode}\&quot;,   \&quot;${previousofficetel}\&quot;,   \&quot;${previousofficetelend}\&quot;,   \&quot;${previousofficetelextstart}\&quot;,   \&quot;${previousofficetelextend}\&quot;,   \&quot;${previousjoblongevityyear}\&quot;,   \&quot;${previousjoblongevitymonth}\&quot;,   \&quot;${totaljoblongevityyear}\&quot;,   \&quot;${totaljoblongevitymonth}\&quot;,   \&quot;${salarypaymentmethod}\&quot;,   \&quot;${occupsubgroupcode}\&quot;,   \&quot;${occupsubgrpnameeng}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Performance_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;CONTRACTNUMBER \&quot;: \&quot;String\&quot;     },    {        \&quot;IDCARDNUMBER \&quot;: \&quot;String\&quot;     },    {        \&quot;FIRSTDUEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;TRANSFERDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;LOANTERM \&quot;: \&quot;String\&quot;     },    {        \&quot;MOB \&quot;: \&quot;String\&quot;     },    {        \&quot;INSTALLAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;OVERDUESTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;OVERDUEAMOUNT \&quot;: \&quot;String\&quot;     },    {        \&quot;FINANCEAMTEXVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;PRICIPLEBALANCEEXVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;INTERESTRECEIVEDEXVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;ASSETSTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;AUCTIONPRICE \&quot;: \&quot;String\&quot;     },    {        \&quot;AUCTIONDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;SELLLOSSAMOUNT \&quot;: \&quot;String\&quot;     },    {        \&quot;SELLLOSSRECOVERY \&quot;: \&quot;String\&quot;     },    {        \&quot;WRITEOFFAMOUNT \&quot;: \&quot;String\&quot;     },    {        \&quot;BADDEBTRECOVERY \&quot;: \&quot;String\&quot;     },    {        \&quot;INSURANCECLAIMAMOUNT \&quot;: \&quot;String\&quot;     },    {        \&quot;CLOSESTATUS \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;APPROVEDDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;PRODUCTTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;INSTALLMENTAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;FINANCEAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;PRINCIPALBAL \&quot;: \&quot;String\&quot;     },    {        \&quot;CARTYPENAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CLOSEDDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;INTERESTRECEIVEDINVAT \&quot;: \&quot;String\&quot;     },    {        \&quot;PAYMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;OUTSTANDINGBAL \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${contractnumber}\&quot;,   \&quot;${idcardnumber}\&quot;,   \&quot;${firstduedate}\&quot;,   \&quot;${transferdate}\&quot;,   \&quot;${loanterm}\&quot;,   \&quot;${mob}\&quot;,   \&quot;${installamt}\&quot;,   \&quot;${overduestatus}\&quot;,   \&quot;${overdueamount}\&quot;,   \&quot;${financeamtexvat}\&quot;,   \&quot;${priciplebalanceexvat}\&quot;,   \&quot;${interestreceivedexvat}\&quot;,   \&quot;${assetstatus}\&quot;,   \&quot;${auctionprice}\&quot;,   \&quot;${auctiondate}\&quot;,   \&quot;${selllossamount}\&quot;,   \&quot;${selllossrecovery}\&quot;,   \&quot;${writeoffamount}\&quot;,   \&quot;${baddebtrecovery}\&quot;,   \&quot;${insuranceclaimamount}\&quot;,   \&quot;${closestatus}\&quot;,   \&quot;${requestno}\&quot;,   \&quot;${approveddate}\&quot;,   \&quot;${producttypecode}\&quot;,   \&quot;${installmentamt}\&quot;,   \&quot;${financeamt}\&quot;,   \&quot;${principalbal}\&quot;,   \&quot;${cartypename}\&quot;,   \&quot;${closeddate}\&quot;,   \&quot;${interestreceivedinvat}\&quot;,   \&quot;${payment}\&quot;,   \&quot;${outstandingbal}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Personal_Information_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;CONTRACTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTRACTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;PERSONTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;PERSONTYPEDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIXCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;PREFIX \&quot;: \&quot;String\&quot;     },    {        \&quot;NAME \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;CARDTYPE \&quot;: \&quot;String\&quot;     },    {        \&quot;CARDTYPEDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;IDCARD \&quot;: \&quot;String\&quot;     },    {        \&quot;BIRTHDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEDAY \&quot;: \&quot;String\&quot;     },    {        \&quot;NATIONALITYCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;NATIONALITYDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;RACECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;RACEDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;CARDISSUEAT \&quot;: \&quot;String\&quot;     },    {        \&quot;CARDISSUEDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;CARDEXPIREDDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;TAXNO \&quot;: \&quot;String\&quot;     },    {        \&quot;MILITARYSERVICECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MILITARYSERVICEDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;RESIDENTTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;RESIDENTTYPEDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;MARITALSTATUSCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MARITALSTATUSDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;NICKNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;BRANCHCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;BRANCHNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;BANKCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;BANKNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;BANKBRANCHCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;BANKBRANCHNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;ACCOUNTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;DECISION \&quot;: \&quot;String\&quot;     },    {        \&quot;DECISIONDATE \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${contractno}\&quot;,   \&quot;${contractdate}\&quot;,   \&quot;${persontypecode}\&quot;,   \&quot;${persontypedesc}\&quot;,   \&quot;${prefixcode}\&quot;,   \&quot;${prefix}\&quot;,   \&quot;${name}\&quot;,   \&quot;${surname}\&quot;,   \&quot;${cardtype}\&quot;,   \&quot;${cardtypedesc}\&quot;,   \&quot;${idcard}\&quot;,   \&quot;${birthdate}\&quot;,   \&quot;${ageyear}\&quot;,   \&quot;${agemonth}\&quot;,   \&quot;${ageday}\&quot;,   \&quot;${nationalitycode}\&quot;,   \&quot;${nationalitydesc}\&quot;,   \&quot;${racecode}\&quot;,   \&quot;${racedesc}\&quot;,   \&quot;${cardissueat}\&quot;,   \&quot;${cardissuedate}\&quot;,   \&quot;${cardexpireddate}\&quot;,   \&quot;${taxno}\&quot;,   \&quot;${militaryservicecode}\&quot;,   \&quot;${militaryservicedesc}\&quot;,   \&quot;${residenttypecode}\&quot;,   \&quot;${residenttypedesc}\&quot;,   \&quot;${maritalstatuscode}\&quot;,   \&quot;${maritalstatusdesc}\&quot;,   \&quot;${nickname}\&quot;,   \&quot;${branchcode}\&quot;,   \&quot;${branchnameeng}\&quot;,   \&quot;${bankcode}\&quot;,   \&quot;${banknameeng}\&quot;,   \&quot;${bankbranchcode}\&quot;,   \&quot;${bankbranchnameeng}\&quot;,   \&quot;${accountno}\&quot;,   \&quot;${decision}\&quot;,   \&quot;${decisiondate}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Spouse_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;PREFIX \&quot;: \&quot;String\&quot;     },    {        \&quot;NAME \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPATIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;SALARY \&quot;: \&quot;String\&quot;     },    {        \&quot;COMPANYNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;FIRSTNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;SURNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;FULLNAMEENG \&quot;: \&quot;String\&quot;     },    {        \&quot;OCCUPATIONGROUPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MOBILE \&quot;: \&quot;String\&quot;     },    {        \&quot;INCOMEAMT \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${prefix}\&quot;,   \&quot;${name}\&quot;,   \&quot;${surname}\&quot;,   \&quot;${occupationcode}\&quot;,   \&quot;${salary}\&quot;,   \&quot;${companyname}\&quot;,   \&quot;${ageyear}\&quot;,   \&quot;${requestno}\&quot;,   \&quot;${fullname}\&quot;,   \&quot;${firstnameeng}\&quot;,   \&quot;${surnameeng}\&quot;,   \&quot;${fullnameeng}\&quot;,   \&quot;${occupationgroupcode}\&quot;,   \&quot;${mobile}\&quot;,   \&quot;${incomeamt}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Telephone_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;TELEPHONETYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;TELEPHONETYPEDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;TELEPHONESEQNO \&quot;: \&quot;String\&quot;     },    {        \&quot;TELEPHONENUMBERSTART \&quot;: \&quot;String\&quot;     },    {        \&quot;TELEPHONENUMBEREND \&quot;: \&quot;String\&quot;     },    {        \&quot;TELEPHONEEXTSTART \&quot;: \&quot;String\&quot;     },    {        \&quot;TELEPHONEEXTEND \&quot;: \&quot;String\&quot;     },    {        \&quot;NOTE \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${telephonetypecode}\&quot;,   \&quot;${telephonetypedesc}\&quot;,   \&quot;${telephoneseqno}\&quot;,   \&quot;${telephonenumberstart}\&quot;,   \&quot;${telephonenumberend}\&quot;,   \&quot;${telephoneextstart}\&quot;,   \&quot;${telephoneextend}\&quot;,   \&quot;${note}\&quot;,   \&quot;${requestno}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Verify_Customer_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;SEXCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;PLACEOFBIRTH \&quot;: \&quot;String\&quot;     },    {        \&quot;CHILDNUMBER \&quot;: \&quot;String\&quot;     },    {        \&quot;FOSTERNUMBER \&quot;: \&quot;String\&quot;     },    {        \&quot;VERIFYMOBILETELWITH \&quot;: \&quot;String\&quot;     },    {        \&quot;VERIFYHOMETELWITH \&quot;: \&quot;String\&quot;     },    {        \&quot;VERIFYOFFICETELWITH \&quot;: \&quot;String\&quot;     },    {        \&quot;LIVINGPLACEPERIODYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;LIVINGPLACEPERIODMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;MODIFYADDRESSCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MODIFYADDRESSREASON \&quot;: \&quot;String\&quot;     },    {        \&quot;DOCUMENTVERIFYCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOLIDAYTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEOFWORKMONTH \&quot;: \&quot;String\&quot;     },    {        \&quot;AGEOFWORKYEAR \&quot;: \&quot;String\&quot;     },    {        \&quot;INCOMETOTAL \&quot;: \&quot;String\&quot;     },    {        \&quot;INCOMEPERINSTALLMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;OUTSTANDINGOTHER \&quot;: \&quot;String\&quot;     },    {        \&quot;OUTSTANDINGOTHERINSTALLMENT \&quot;: \&quot;String\&quot;     },    {        \&quot;OUTSTANDINGPERCENT \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITPOLICY \&quot;: \&quot;String\&quot;     },    {        \&quot;WITHOUTCRITERIAFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;OVERRIDEFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;OVERRIDEPERSONUSERID \&quot;: \&quot;String\&quot;     },    {        \&quot;OVERRIDEPOSITIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITANALYSTAGREEFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;CREDITANALYSTAGREEREASON \&quot;: \&quot;String\&quot;     },    {        \&quot;MAPPROFILEFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;REDZONEPROFILEFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;DECREASEFINANCEFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;DECREASEFINANCEAMT \&quot;: \&quot;String\&quot;     },    {        \&quot;ADVANCEINSTALLMENTFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;ADVANCEINSTALLMENTTERM \&quot;: \&quot;String\&quot;     },    {        \&quot;BEGININGFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;ADDGUARANTORFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;OPINION \&quot;: \&quot;String\&quot;     },    {        \&quot;USERCARTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;USERCARRELATIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;USERCARRELATIONDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;USERCARREASON \&quot;: \&quot;String\&quot;     },    {        \&quot;USERCARNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;USERCARPHONE \&quot;: \&quot;String\&quot;     },    {        \&quot;USERCARPHONEEXT \&quot;: \&quot;String\&quot;     },    {        \&quot;USERCARADDRESS \&quot;: \&quot;String\&quot;     },    {        \&quot;USERPAYTYPECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;USERPAYRELATIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;USERPAYRELATIONDESC \&quot;: \&quot;String\&quot;     },    {        \&quot;USERPAYREASON \&quot;: \&quot;String\&quot;     },    {        \&quot;USERPAYNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;USERPAYPHONE \&quot;: \&quot;String\&quot;     },    {        \&quot;USERPAYPHONEEXT \&quot;: \&quot;String\&quot;     },    {        \&quot;USERPAYADDRESS \&quot;: \&quot;String\&quot;     },    {        \&quot;DECISIONRESULTNAME \&quot;: \&quot;String\&quot;     },    {        \&quot;DECISIONRESULTCOLORRED \&quot;: \&quot;String\&quot;     },    {        \&quot;DECISIONRESULTCOLORGREEN \&quot;: \&quot;String\&quot;     },    {        \&quot;DECISIONRESULTCOLORBLUE \&quot;: \&quot;String\&quot;     },    {        \&quot;ORIGINALINTERESTRATE \&quot;: \&quot;String\&quot;     },    {        \&quot;PDSCORE \&quot;: \&quot;String\&quot;     },    {        \&quot;PDSCORERANK \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGZIPCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEPROVINCECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEPROVINCE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTPROVINCECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTPROVINCE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEPROVINCECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEPROVINCE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGPROVINCECODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGPROVINCE \&quot;: \&quot;String\&quot;     },    {        \&quot;FIXEDINCOME \&quot;: \&quot;String\&quot;     },    {        \&quot;OTHERINCOME \&quot;: \&quot;String\&quot;     },    {        \&quot;GROSSINCOME \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEADDRESSNO \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEMOO \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEVILLAGE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEFLOOR \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEROOMNO \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSETROK \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSESOI \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEROAD \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSESUBDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSESUBDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;HOUSEDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTADDRESSNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTMOO \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTVILLAGE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTFLOOR \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTROOMNO \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTTROK \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTSOI \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTROAD \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRECTSUBDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTSUBDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;CURRENTDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICECOMPANY \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEADDRESSNO \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEMOO \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEVILLAGE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEFLOOR \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEROOMNO \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICETROK \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICESOI \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEROAD \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICESUBDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICESUBDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;OFFICEDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGADDRESSNO \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGMOO \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGVILLAGE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGFLOOR \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGROOMNO \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGTROK \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGSOI \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGROAD \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGSUBDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGSUBDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGDISTRICTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;MAILINGDISTRICT \&quot;: \&quot;String\&quot;     },    {        \&quot;NCBFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;BLACKLISTFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;VALIDDOCVERIFY \&quot;: \&quot;String\&quot;     },    {        \&quot;COMPLETEDOCVERIFY \&quot;: \&quot;String\&quot;     },    {        \&quot;CUSTOMEREXISTINGVERIFY \&quot;: \&quot;String\&quot;     },    {        \&quot;EMPLOYMENTVERIFY \&quot;: \&quot;String\&quot;     },    {        \&quot;DATAMARTPROFILEFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;WORKPERMIT \&quot;: \&quot;String\&quot;     },    {        \&quot;HPTARGETAREA \&quot;: \&quot;String\&quot;     },    {        \&quot;SERVICEAREA \&quot;: \&quot;String\&quot;     },    {        \&quot;INSURANCEFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;BEGININGTERM \&quot;: \&quot;String\&quot;     },    {        \&quot;RELIABLEBILLFLAG \&quot;: \&quot;String\&quot;     },    {        \&quot;APPLICATIOINCOME \&quot;: \&quot;String\&quot;     },    {        \&quot;CALCULATIONINCOME \&quot;: \&quot;String\&quot;     },    {        \&quot;STANDARD \&quot;: \&quot;String\&quot;     },    {        \&quot;CAUADJUSTINCOME \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${requestno}\&quot;,   \&quot;${sexcode}\&quot;,   \&quot;${placeofbirth}\&quot;,   \&quot;${childnumber}\&quot;,   \&quot;${fosternumber}\&quot;,   \&quot;${verifymobiletelwith}\&quot;,   \&quot;${verifyhometelwith}\&quot;,   \&quot;${verifyofficetelwith}\&quot;,   \&quot;${livingplaceperiodyear}\&quot;,   \&quot;${livingplaceperiodmonth}\&quot;,   \&quot;${modifyaddresscode}\&quot;,   \&quot;${modifyaddressreason}\&quot;,   \&quot;${documentverifycode}\&quot;,   \&quot;${holidaytypecode}\&quot;,   \&quot;${ageofworkmonth}\&quot;,   \&quot;${ageofworkyear}\&quot;,   \&quot;${incometotal}\&quot;,   \&quot;${incomeperinstallment}\&quot;,   \&quot;${outstandingother}\&quot;,   \&quot;${outstandingotherinstallment}\&quot;,   \&quot;${outstandingpercent}\&quot;,   \&quot;${creditpolicy}\&quot;,   \&quot;${withoutcriteriaflag}\&quot;,   \&quot;${overrideflag}\&quot;,   \&quot;${overridepersonuserid}\&quot;,   \&quot;${overridepositioncode}\&quot;,   \&quot;${creditanalystagreeflag}\&quot;,   \&quot;${creditanalystagreereason}\&quot;,   \&quot;${mapprofileflag}\&quot;,   \&quot;${redzoneprofileflag}\&quot;,   \&quot;${decreasefinanceflag}\&quot;,   \&quot;${decreasefinanceamt}\&quot;,   \&quot;${advanceinstallmentflag}\&quot;,   \&quot;${advanceinstallmentterm}\&quot;,   \&quot;${beginingflag}\&quot;,   \&quot;${addguarantorflag}\&quot;,   \&quot;${opinion}\&quot;,   \&quot;${usercartypecode}\&quot;,   \&quot;${usercarrelationcode}\&quot;,   \&quot;${usercarrelationdesc}\&quot;,   \&quot;${usercarreason}\&quot;,   \&quot;${usercarname}\&quot;,   \&quot;${usercarphone}\&quot;,   \&quot;${usercarphoneext}\&quot;,   \&quot;${usercaraddress}\&quot;,   \&quot;${userpaytypecode}\&quot;,   \&quot;${userpayrelationcode}\&quot;,   \&quot;${userpayrelationdesc}\&quot;,   \&quot;${userpayreason}\&quot;,   \&quot;${userpayname}\&quot;,   \&quot;${userpayphone}\&quot;,   \&quot;${userpayphoneext}\&quot;,   \&quot;${userpayaddress}\&quot;,   \&quot;${decisionresultname}\&quot;,   \&quot;${decisionresultcolorred}\&quot;,   \&quot;${decisionresultcolorgreen}\&quot;,   \&quot;${decisionresultcolorblue}\&quot;,   \&quot;${originalinterestrate}\&quot;,   \&quot;${pdscore}\&quot;,   \&quot;${pdscorerank}\&quot;,   \&quot;${housezipcode}\&quot;,   \&quot;${currentzipcode}\&quot;,   \&quot;${officezipcode}\&quot;,   \&quot;${mailingzipcode}\&quot;,   \&quot;${houseprovincecode}\&quot;,   \&quot;${houseprovince}\&quot;,   \&quot;${currentprovincecode}\&quot;,   \&quot;${currentprovince}\&quot;,   \&quot;${officeprovincecode}\&quot;,   \&quot;${officeprovince}\&quot;,   \&quot;${mailingprovincecode}\&quot;,   \&quot;${mailingprovince}\&quot;,   \&quot;${fixedincome}\&quot;,   \&quot;${otherincome}\&quot;,   \&quot;${grossincome}\&quot;,   \&quot;${houseaddressno}\&quot;,   \&quot;${housemoo}\&quot;,   \&quot;${housevillage}\&quot;,   \&quot;${housefloor}\&quot;,   \&quot;${houseroomno}\&quot;,   \&quot;${housetrok}\&quot;,   \&quot;${housesoi}\&quot;,   \&quot;${houseroad}\&quot;,   \&quot;${housesubdistrictcode}\&quot;,   \&quot;${housesubdistrict}\&quot;,   \&quot;${housedistrictcode}\&quot;,   \&quot;${housedistrict}\&quot;,   \&quot;${currentaddressno}\&quot;,   \&quot;${currentaddressno}\&quot;,   \&quot;${currentvillage}\&quot;,   \&quot;${currentfloor}\&quot;,   \&quot;${currentroomno}\&quot;,   \&quot;${currenttrok}\&quot;,   \&quot;${currentsoi}\&quot;,   \&quot;${currentroad}\&quot;,   \&quot;${currectsubdistrictcode}\&quot;,   \&quot;${currentsubdistrict}\&quot;,   \&quot;${currentdistrictcode}\&quot;,   \&quot;${currentdistrict}\&quot;,   \&quot;${officecompany}\&quot;,   \&quot;${officeaddressno}\&quot;,   \&quot;${officemoo}\&quot;,   \&quot;${officevillage}\&quot;,   \&quot;${officefloor}\&quot;,   \&quot;${officeroomno}\&quot;,   \&quot;${officetrok}\&quot;,   \&quot;${officesoi}\&quot;,   \&quot;${officeroad}\&quot;,   \&quot;${officesubdistrictcode}\&quot;,   \&quot;${officesubdistrict}\&quot;,   \&quot;${officedistrictcode}\&quot;,   \&quot;${officedistrict}\&quot;,   \&quot;${mailingaddressno}\&quot;,   \&quot;${mailingmoo}\&quot;,   \&quot;${mailingvillage}\&quot;,   \&quot;${mailingfloor}\&quot;,   \&quot;${mailingroomno}\&quot;,   \&quot;${mailingtrok}\&quot;,   \&quot;${mailingsoi}\&quot;,   \&quot;${mailingroad}\&quot;,   \&quot;${mailingsubdistrictcode}\&quot;,   \&quot;${mailingsubdistrict}\&quot;,   \&quot;${mailingdistrictcode}\&quot;,   \&quot;${mailingdistrict}\&quot;,   \&quot;${ncbflag}\&quot;,   \&quot;${blacklistflag}\&quot;,   \&quot;${validdocverify}\&quot;,   \&quot;${completedocverify}\&quot;,   \&quot;${customerexistingverify}\&quot;,   \&quot;${employmentverify}\&quot;,   \&quot;${datamartprofileflag}\&quot;,   \&quot;${workpermit}\&quot;,   \&quot;${hptargetarea}\&quot;,   \&quot;${servicearea}\&quot;,   \&quot;${insuranceflag}\&quot;,   \&quot;${beginingterm}\&quot;,   \&quot;${reliablebillflag}\&quot;,   \&quot;${applicatioincome}\&quot;,   \&quot;${calculationincome}\&quot;,   \&quot;${standard}\&quot;,   \&quot;${cauadjustincome}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Welcome_Call1_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;CONTRACTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;TELEPHONENO \&quot;: \&quot;String\&quot;     },    {        \&quot;NOTE \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTACTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;ACTIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;ACTIONDESCRIPTION \&quot;: \&quot;String\&quot;     },    {        \&quot;DEPTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;DEPTNAMEEN \&quot;: \&quot;String\&quot;     },    {        \&quot;DEPTNAMETH \&quot;: \&quot;String\&quot;     },    {        \&quot;RESULTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;DESCRIPTION \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${contractno}\&quot;,   \&quot;${requestno}\&quot;,   \&quot;${telephoneno}\&quot;,   \&quot;${note}\&quot;,   \&quot;${contactdate}\&quot;,   \&quot;${actioncode}\&quot;,   \&quot;${actiondescription}\&quot;,   \&quot;${deptcode}\&quot;,   \&quot;${deptnameen}\&quot;,   \&quot;${deptnameth}\&quot;,   \&quot;${resultcode}\&quot;,   \&quot;${description}\&quot;    ]] } ]  },       { \&quot;name\&quot;: \&quot;Welcome_Call2_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot;CONTRACTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;REQUESTNO \&quot;: \&quot;String\&quot;     },    {        \&quot;TELEPHONENO \&quot;: \&quot;String\&quot;     },    {        \&quot;NOTE \&quot;: \&quot;String\&quot;     },    {        \&quot;CONTACTDATE \&quot;: \&quot;String\&quot;     },    {        \&quot;ACTIONCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;ACTIONDESCRIPTION \&quot;: \&quot;String\&quot;     },    {        \&quot;DEPTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;DEPTNAMEEN \&quot;: \&quot;String\&quot;     },    {        \&quot;DEPTNAMETH \&quot;: \&quot;String\&quot;     },    {        \&quot;RESULTCODE \&quot;: \&quot;String\&quot;     },    {        \&quot;DESCRIPTION \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${contractno}\&quot;,   \&quot;${requestno}\&quot;,   \&quot;${telephoneno}\&quot;,   \&quot;${note}\&quot;,   \&quot;${contactdate}\&quot;,   \&quot;${actioncode}\&quot;,   \&quot;${actiondescription}\&quot;,   \&quot;${deptcode}\&quot;,   \&quot;${deptnameen}\&quot;,   \&quot;${deptnameth}\&quot;,   \&quot;${resultcode}\&quot;,   \&quot;${description}\&quot;    ]] } ]  },       {   \&quot;name\&quot;: \&quot;Membership_\&quot;,    \&quot;value\&quot;: [     {           \&quot;metadata\&quot;: [      {        \&quot; MEMBERCODE \&quot;: \&quot;String\&quot;     },    {        \&quot; MEMBERSHIPDATEFROM \&quot;: \&quot;String\&quot;     },    {        \&quot; MEMBERSHIPDATETO \&quot;: \&quot;String\&quot;     },    {        \&quot; IDCARDNUMBER \&quot;: \&quot;String\&quot;     }]},    {      \&quot;data\&quot;: [        [       \&quot;${membercode}\&quot;,   \&quot;${membershipdatefrom}\&quot;,   \&quot;${membershipdateto}\&quot;,   \&quot;${idcardnumber}\&quot;    ]] } ]  }    ]}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="ConfirmFraud">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/ConfirmFraud</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+            <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+              <collectionProp name="HTTPFileArgs.files">
+                <elementProp name="${imgPath}${transaction_id}_1.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_1.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_2.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_2.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_3.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_3.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_4.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_4.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_5.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_5.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="transaction_id" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${transaction_id}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">transaction_id</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="request_no" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${request_no}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">request_no</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="memo_comment" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${memo_comment}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">memo_comment</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="year" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${year}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">year</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="month" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${month}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">month</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="day" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${day}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">day</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="hour" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${hour}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">hour</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="reasons" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">[{&quot;reason_code&quot; : &quot;${reason_code_1}&quot;  , &quot;reason_desc&quot; : &quot;${reason_desc_1}&quot; }  , { &quot;reason_code&quot; : &quot;${reason_code_2}&quot;  , &quot;reason_desc&quot; : &quot;${reason_desc_2}&quot;}]</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">reasons</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="blacklists" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">[{&quot;field_name&quot; : &quot;${field_name_1}&quot;  , &quot;value&quot; : &quot;${value_1}&quot; } , { &quot;field_name&quot; : &quot;${field_name_2}&quot;, &quot;value&quot; : &quot;${value_2}&quot;}]</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">blacklists</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="is_permanently" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${is_permanently}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">is_permanently</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UpdateStatusReassign" enabled="true">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/UpdateStatusReassign</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+            <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+              <collectionProp name="HTTPFileArgs.files">
+                <elementProp name="${imgPath}${transaction_id}_1.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_1.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_2.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_2.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_3.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_3.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_4.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_4.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_5.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_5.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="transaction_id" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${transaction_id}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">transaction_id</stringProp>
+                </elementProp>
+                <elementProp name="request_no" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${requestno}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">request_no</stringProp>
+                </elementProp>
+                <elementProp name="memo_comment" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${memo_comment}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">memo_comment</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">5000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UpdateGenuine" enabled="true">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/UpdateGenuine</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+            <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+              <collectionProp name="HTTPFileArgs.files">
+                <elementProp name="${imgPath}${transaction_id}_1.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_1.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_2.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_2.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_3.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_3.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_4.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_4.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_5.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_5.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="transaction_id" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${transaction_id}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">transaction_id</stringProp>
+                </elementProp>
+                <elementProp name="request_no" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${request_no}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">request_no</stringProp>
+                </elementProp>
+                <elementProp name="memo_comment" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${memo_comment}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">memo_comment</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">5000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="UpdateGenuineSC" enabled="true">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/UpdateGenuineSC</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+            <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+              <collectionProp name="HTTPFileArgs.files">
+                <elementProp name="${imgPath}${transaction_id}_1.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_1.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_2.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_2.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_3.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_3.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_4.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_4.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_5.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpeg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_5.jpg</stringProp>
+                  <stringProp name="File.paramname">file</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="transaction_id" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${transaction_id}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">transaction_id</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="request_no" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${request_no}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">request_no</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="memo_comment" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${memo_comment}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">memo_comment</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">5000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="AddMemo" enabled="true">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/AddMemo</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+            <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+              <collectionProp name="HTTPFileArgs.files">
+                <elementProp name="${imgPath}${transaction_id}_1.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_1.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_2.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_2.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_3.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_3.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_4.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_4.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+                <elementProp name="${imgPath}${transaction_id}_5.jpg" elementType="HTTPFileArg">
+                  <stringProp name="File.mimetype">image/jpg</stringProp>
+                  <stringProp name="File.path">${imgPath}${transaction_id}_5.jpg</stringProp>
+                  <stringProp name="File.paramname">files</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="transaction_id" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${transaction_id}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">transaction_id</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="request_no" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${request_no}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">request_no</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+                <elementProp name="memo_comment" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${memo_comment}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">memo_comment</stringProp>
+                  <stringProp name="HTTPArgument.content_type">text</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">5000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetMemo" enabled="true">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/GetMemo</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+  &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+  &quot;request_no&quot;: &quot;${request_no}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">5000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="SearchTransHistory" enabled="true">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/SearchTransHistory</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;conditions&quot;: [&#xd;
+        {&#xd;
+            &quot;field_name&quot;: &quot;${field_name_1}&quot;,&#xd;
+            &quot;oper&quot;: &quot;${oper}&quot;,&#xd;
+            &quot;value&quot;: &quot;${value_1}&quot;&#xd;
+        },&#xd;
+        {&#xd;
+            &quot;field_name&quot;: &quot;${field_name_2}&quot;,&#xd;
+            &quot;oper&quot;: &quot;${oper}&quot;,&#xd;
+            &quot;value&quot;: &quot;${value_2}&quot;&#xd;
+        }&#xd;
+    ]&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetAllFieldName" enabled="true">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/GetAllFieldName</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="CheckState">
+            <stringProp name="HTTPSampler.domain">${url}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${https}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+            <stringProp name="HTTPSampler.path">/Fraud/CheckState</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;transaction_id&quot;: &quot;${transaction_id}&quot;,&#xd;
+    &quot;request_no&quot;: &quot;${request_no}&quot;,&#xd;
+    &quot;username&quot;: &quot;${username}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="49586">200</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+              <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>true</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">/Users/penploys/Desktop/sas viya project/Aggregate Graph.csv</stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">/Users/penploys/Desktop/Project SAS VIYA/SAS VIYA.csv</stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
